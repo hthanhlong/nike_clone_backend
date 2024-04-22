@@ -13,6 +13,7 @@ namespace Reformation.Repositories.UserRepository
     {
         Task<UserModel?> GetUser(int id);
         Task<List<UserModel>> GetUsers();
+        Task<UserModel?> GetUserByEmail(string email);
         Task AddUser(CreateUserDto user);
         // Task DeleteUser(int id);
         // Task UpdateUser(UserModel user);

@@ -1,11 +1,10 @@
 using Reformation.Database;
 using Microsoft.EntityFrameworkCore;
-using Reformation.Services;
-using Reformation.Repositories;
-using Reformation.Mappers;
 using Reformation.Services.UserService;
 using Reformation.Repositories.UserRepository;
 using Reformation.Mappers.UserMappers;
+using Reformation.Mappers.AuthMappers;
+using Reformation.Services.AuthService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,10 +16,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddAutoMapper(typeof(UserMapper));
+builder.Services.AddAutoMapper(typeof(AuthMappers));
 
 
 var app = builder.Build();

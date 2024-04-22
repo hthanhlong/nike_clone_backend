@@ -28,6 +28,11 @@ namespace Reformation.Repositories.UserRepository
             return await _context.UserModel.FindAsync(id);
         }
 
+        public async Task<UserModel?> GetUserByEmail(string email)
+        {
+            return await _context.UserModel.FirstOrDefaultAsync(user => user.Email == email);
+        }
+
         public async Task AddUser(CreateUserDto user)
         {
             if (user == null)
