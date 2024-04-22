@@ -139,3 +139,4 @@
 /Users/meenadang/Private/Coding/Dot-net/Reformation/bin/Debug/net8.0/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 /Users/meenadang/Private/Coding/Dot-net/Reformation/bin/Debug/net8.0/Newtonsoft.Json.dll
 /Users/meenadang/Private/Coding/Dot-net/Reformation/bin/Debug/net8.0/Newtonsoft.Json.Bson.dll
+/Users/meenadang/Private/Coding/Dot-net/Reformation/obj/Debug/net8.0/Reformation.sourcelink.json
