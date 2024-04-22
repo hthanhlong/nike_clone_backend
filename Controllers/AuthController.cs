@@ -6,7 +6,7 @@ namespace Reformation.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthController
+    public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
         public AuthController(IAuthService authService)
@@ -40,6 +40,10 @@ namespace Reformation.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
                 var isSuccess = await _authService.SignIn(signInDto);
                 if (!isSuccess)
                 {

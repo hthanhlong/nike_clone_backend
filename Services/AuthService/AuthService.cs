@@ -6,6 +6,7 @@ using AutoMapper;
 using Reformation.Dtos;
 using Reformation.Dtos.AuthDtos;
 using Reformation.Repositories.UserRepository;
+using Reformation.Utils;
 
 namespace Reformation.Services.AuthService
 {
@@ -21,8 +22,10 @@ namespace Reformation.Services.AuthService
             {
                 throw new Exception("User not found");
             }
-            var password = isUserExist.Password;
-            if (password != signInDto.Password)
+            var hashedPassword = isUserExist.Password;
+            var passwordHasher = new PasswordHasherUtils();
+            var isPasswordCorrect = passwordHasher.VerifyPassword(hashedPassword, signInDto.Password);
+            if (!isPasswordCorrect)
             {
                 throw new Exception("Invalid password");
             }

@@ -3,6 +3,7 @@ using Reformation.Models;
 using Microsoft.EntityFrameworkCore;
 using Reformation.Dtos;
 using AutoMapper;
+using Reformation.Utils;
 
 namespace Reformation.Repositories.UserRepository
 {
@@ -42,6 +43,8 @@ namespace Reformation.Repositories.UserRepository
             else
             {
                 var newUser = _mapper.Map<UserModel>(user);
+                var passwordHasher = new PasswordHasherUtils();
+                newUser.Password = passwordHasher.HashPassword(newUser.Password);
                 await _context.UserModel.AddAsync(newUser);
                 await _context.SaveChangesAsync();
             }
