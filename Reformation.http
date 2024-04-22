@@ -1,0 +1,6 @@
+@Reformation_HostAddress = http://localhost:5149
+
+GET {{Reformation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
