@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Reformation.Services;
 using Reformation.Repositories;
 using Reformation.Mappers;
+using Reformation.Services.UserService;
+using Reformation.Repositories.UserRepository;
+using Reformation.Mappers.UserMappers;
 
 var builder = WebApplication.CreateBuilder(args);
 

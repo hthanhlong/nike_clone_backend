@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Reformation.Dtos;
 using Reformation.Models;
-using Reformation.Repositories;
+using Reformation.Repositories.UserRepository;
 
-namespace Reformation.Services
+namespace Reformation.Services.UserService
 {
     public class UserService : IUserService
     {
@@ -20,7 +21,12 @@ namespace Reformation.Services
             return await _userRepository.GetUsers();
         }
 
-        public async Task AddUser(UserModel user)
+        public async Task<UserModel?> GetUser(int id)
+        {
+            return await _userRepository.GetUser(id);
+        }
+
+        public async Task AddUser(CreateUserDto user)
         {
             await _userRepository.AddUser(user);
         }
