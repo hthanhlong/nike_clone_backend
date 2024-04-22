@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Reformation.Mappers;
 using Reformation.Models;
 using Reformation.Services;
 
@@ -23,7 +24,8 @@ namespace Reformation.Controllers
         public async Task<ActionResult> GetUsers()
         {
             var users = await _userService.GetUsers();
-            return new OkObjectResult(users);
+            var newUser = users.Select(user => user.ToDto());
+            return new OkObjectResult(newUser);
         }
 
         [HttpPost]
