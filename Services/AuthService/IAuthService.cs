@@ -8,8 +8,8 @@ namespace Reformation.Services.AuthService
 {
     public interface IAuthService
     {
-        public Task<bool> SignUp(SignUpDto signUpDto);
-        public Task<bool> SignIn(SignInDto signInDto);
+        public Task SignUp(SignUpDto signUpDto);
+        public Task SignIn(SignInDto signInDto);
 
     }
 }

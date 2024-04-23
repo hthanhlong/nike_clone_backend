@@ -20,15 +20,8 @@ namespace Reformation.Controllers
         {
             try
             {
-                var isSuccess = await _authService.SignUp(signUpDto);
-                if (!isSuccess)
-                {
-                    return new BadRequestResponse("User is already existed");
-                }
-                else
-                {
-                    return new SuccessResponse(new { }, "User signed up successfully");
-                }
+                await _authService.SignUp(signUpDto);
+                return new SuccessResponse(new { }, "User signed up successfully");
             }
             catch (Exception ex)
             {
@@ -41,19 +34,8 @@ namespace Reformation.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-                var isSuccess = await _authService.SignIn(signInDto);
-                if (!isSuccess)
-                {
-                    return new BadRequestResponse("User is not already existed");
-                }
-                else
-                {
-                    return new SuccessResponse(new { }, "User signed up successfully");
-                }
+                await _authService.SignIn(signInDto);
+                return new SuccessResponse(new { }, "User signed In successfully");
             }
             catch (Exception ex)
             {

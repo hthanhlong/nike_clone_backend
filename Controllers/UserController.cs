@@ -24,25 +24,39 @@ namespace Reformation.Controllers
         [HttpGet]
         public async Task<ActionResult> GetUsers()
         {
-            var users = await _userService.GetUsers();
-            if (users == null)
+            try
             {
-                return new NotFoundResponse("Users not found");
+                var users = await _userService.GetUsers();
+                if (users == null)
+                {
+                    return new NotFoundResponse("Users not found");
+                }
+                var newUser = _mapper.Map<List<GetUserDto>>(users); // Mapping the UserModel to GetUserDto
+                return Ok(new SuccessResponse(newUser, "Users found").Value);
             }
-            var newUser = _mapper.Map<List<GetUserDto>>(users); // Mapping the UserModel to GetUserDto
-            return Ok(new SuccessResponse(newUser, "Users found").Value);
+            catch (Exception ex)
+            {
+                return new BadRequestResponse(ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetUser(int id)
         {
-            var user = await _userService.GetUser(id);
-            if (user == null)
+            try
             {
-                return new NotFoundResponse("User not found");
+                var user = await _userService.GetUser(id);
+                if (user == null)
+                {
+                    return new NotFoundResponse("User not found");
+                }
+                GetUserDto _user = _mapper.Map<GetUserDto>(user); // convert to DTO
+                return Ok(new SuccessResponse(_user, "User found").Value);
             }
-            GetUserDto _user = _mapper.Map<GetUserDto>(user); // convert to DTO
-            return Ok(new SuccessResponse(_user, "User found").Value);
+            catch (Exception ex)
+            {
+                return new BadRequestResponse(ex.Message);
+            }
         }
 
     }
