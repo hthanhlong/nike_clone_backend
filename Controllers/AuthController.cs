@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Reformation.Core;
 using Reformation.Dtos.AuthDtos;
 using Reformation.Services.AuthService;
 
@@ -22,16 +23,16 @@ namespace Reformation.Controllers
                 var isSuccess = await _authService.SignUp(signUpDto);
                 if (!isSuccess)
                 {
-                    return new BadRequestObjectResult(new { message = "User is existed" });
+                    return new BadRequestResponse("User is already existed");
                 }
                 else
                 {
-                    return new OkObjectResult(new { message = "User created successfully" });
+                    return new SuccessResponse(new { }, "User signed up successfully");
                 }
             }
             catch (Exception ex)
             {
-                return new BadRequestObjectResult(new { message = ex.Message });
+                return new BadRequestResponse(ex.Message);
             }
         }
 
@@ -47,16 +48,16 @@ namespace Reformation.Controllers
                 var isSuccess = await _authService.SignIn(signInDto);
                 if (!isSuccess)
                 {
-                    return new BadRequestObjectResult(new { message = "User is not existed" });
+                    return new BadRequestResponse("User is not already existed");
                 }
                 else
                 {
-                    return new OkObjectResult(new { message = "User signed in successfully" });
+                    return new SuccessResponse(new { }, "User signed up successfully");
                 }
             }
             catch (Exception ex)
             {
-                return new BadRequestObjectResult(new { message = ex.Message });
+                return new BadRequestResponse(ex.Message);
             }
         }
     }
