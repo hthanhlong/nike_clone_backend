@@ -10,6 +10,16 @@ namespace Reformation.Database
         {
         }
         public DbSet<UserModel> UserModel { get; set; }
-
+        public DbSet<RoleModel> RoleModel { get; set; }
+        public DbSet<PermissionModel> PermissionModel { get; set; }
+        public DbSet<OrderModel> OrderModel { get; set; }
+        public DbSet<ProductModel> ProductModel { get; set; }
+        public DbSet<TransactionModel> TransactionModel { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserModel>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+        }
     }
 }

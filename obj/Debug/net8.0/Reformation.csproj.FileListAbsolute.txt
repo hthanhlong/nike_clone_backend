@@ -142,3 +142,4 @@
 /Users/meenadang/Private/Coding/Dot-net/Reformation/obj/Debug/net8.0/Reformation.sourcelink.json
 /Users/meenadang/Private/Coding/Dot-net/Reformation/bin/Debug/net8.0/AutoMapper.dll
 /Users/meenadang/Private/Coding/Dot-net/Reformation/bin/Debug/net8.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+/Users/meenadang/Private/Coding/Dot-net/Reformation/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll

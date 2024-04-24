@@ -1,16 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Reformation.Dtos.AuthDtos;
+using Reformation.Models;
 
 namespace Reformation.Services.AuthService
 {
     public interface IAuthService
     {
         public Task SignUp(SignUpDto signUpDto);
-        public Task SignIn(SignInDto signInDto);
-
+        public Task<object> SignIn(SignInDto signInDto);
+        public string GenerateAccessToken(object user);
+        public string GenerateRefreshToken();
     }
 }
 

@@ -8,7 +8,7 @@ using Reformation.Services.UserService;
 namespace Reformation.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
