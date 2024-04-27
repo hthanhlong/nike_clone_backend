@@ -16,5 +16,36 @@ namespace Reformation.Controllers
         public PermissionController()
         {
         }
+
+        [HttpGet]
+        public IActionResult GetPermissions()
+        {
+            return Ok();
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetPermission(int id)
+        {
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult AddPermission()
+        {
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdatePermission(int id)
+        {
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeletePermission(int id)
+        {
+            return Ok();
+        }
     }
 }
+

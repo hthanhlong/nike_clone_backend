@@ -8,11 +8,11 @@ namespace Reformation.Repositories.CategoryRepository
 {
     public interface ICategoryRepository
     {
-        Task<IEnumerable<CategoryModel>> GetAll();
-        Task<CategoryModel> GetById(int id);
-        Task<CategoryModel> Create(CategoryModel category);
-        Task<CategoryModel> Update(CategoryModel category);
-        Task<CategoryModel> Delete(int id);
+        Task<IEnumerable<CategoryModel>> GetCategories();
+        Task<CategoryModel> GetCategory(int id);
+        Task<CategoryModel> AddCategory(CategoryModel category);
+        Task<CategoryModel> UpdateCategory(CategoryModel category);
+        Task<CategoryModel> DeleteCategory(int id);
     }
 }
 

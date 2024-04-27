@@ -16,5 +16,36 @@ namespace Reformation.Controllers
         public CategoryController()
         {
         }
+
+        [HttpGet]
+        public IActionResult GetCategories()
+        {
+            return Ok();
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetCategory(int id)
+        {
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult AddCategory()
+        {
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateCategory(int id)
+        {
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteCategory(int id)
+        {
+            return Ok();
+        }
     }
 }
+

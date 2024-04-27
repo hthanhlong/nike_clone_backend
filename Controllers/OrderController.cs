@@ -16,5 +16,36 @@ namespace Reformation.Controllers
         public OrderController()
         {
         }
+
+        [HttpGet]
+        public IActionResult GetOrders()
+        {
+            return Ok();
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetOrder(int id)
+        {
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult AddOrder()
+        {
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateOrder(int id)
+        {
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteOrder(int id)
+        {
+            return Ok();
+        }
     }
 }
+

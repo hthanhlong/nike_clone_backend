@@ -16,5 +16,36 @@ namespace Reformation.Controllers
         public StoreController()
         {
         }
+
+        [HttpGet]
+        public IActionResult GetStores()
+        {
+            return Ok();
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetStore(int id)
+        {
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult AddStore()
+        {
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateStore(int id)
+        {
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteStore(int id)
+        {
+            return Ok();
+        }
     }
 }
+

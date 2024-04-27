@@ -4,31 +4,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using Reformation.Models;
 
-namespace Reformation.Repositories.ProductRepository
+namespace Reformation.Repositories.WarehouseRepository
 {
-    public class ProductRepository : IProductRepository
+    public class WarehouseRepository : IWarehouseRepository
     {
-        public Task<ProductModel> AddProduct(ProductModel product)
+        public Task<WarehouseModel> AddWarehouse(WarehouseModel warehouse)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ProductModel> DeleteProduct(int id)
+        public Task<WarehouseModel> DeleteWarehouse(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ProductModel> GetProduct(int id)
+        public Task<WarehouseModel> GetWarehouse(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ProductModel>> GetProducts()
+        public Task<IEnumerable<WarehouseModel>> GetWarehouses()
         {
             throw new NotImplementedException();
         }
 
-        public Task<ProductModel> UpdateProduct(ProductModel product)
+        public Task<WarehouseModel> UpdateWarehouse(WarehouseModel warehouse)
         {
             throw new NotImplementedException();
         }

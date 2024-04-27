@@ -59,5 +59,23 @@ namespace Reformation.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult AddUser()
+        {
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateUser(int id)
+        {
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteUser(int id)
+        {
+            return Ok();
+        }
     }
 }
+

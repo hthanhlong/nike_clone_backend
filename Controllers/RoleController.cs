@@ -16,5 +16,36 @@ namespace Reformation.Controllers
         public RoleController()
         {
         }
+
+        [HttpGet]
+        public IActionResult GetRoles()
+        {
+            return Ok();
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetRole(int id)
+        {
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult AddRole()
+        {
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateRole(int id)
+        {
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteRole(int id)
+        {
+            return Ok();
+        }
     }
 }
+
