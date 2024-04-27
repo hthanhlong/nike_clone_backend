@@ -16,5 +16,3 @@ namespace Reformation.Models
 
     }
 }
-// permission = [create, read, update, delete]
-// resource = [product, category, store, role, permission]

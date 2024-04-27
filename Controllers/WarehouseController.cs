@@ -10,39 +10,39 @@ namespace Reformation.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class StoreController : ControllerBase
+    public class WarehouseController : ControllerBase
     {
 
-        public StoreController()
+        public WarehouseController()
         {
         }
 
         [HttpGet]
-        public IActionResult GetStores()
+        public IActionResult GetWarehouses()
         {
             return Ok();
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetStore(int id)
+        public IActionResult GetWarehouse(int id)
         {
             return Ok();
         }
 
         [HttpPost]
-        public IActionResult AddStore()
+        public IActionResult AddWarehouse()
         {
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateStore(int id)
+        public IActionResult UpdateWarehouse(int id)
         {
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteStore(int id)
+        public IActionResult DeleteWarehouse(int id)
         {
             return Ok();
         }
