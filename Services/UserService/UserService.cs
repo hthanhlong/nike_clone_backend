@@ -1,34 +1,27 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Reformation.Dtos;
+using Reformation.Classes;
 using Reformation.Models;
-using Reformation.Repositories.UserRepository;
-
+using Reformation.UnitOfWork;
 namespace Reformation.Services.UserService
 {
-    public class UserService : IUserService
+    public class UserService : GenericService, IUserService
     {
-        private readonly IUserRepository _userRepository;
-
-        public UserService(IUserRepository userRepository)
+        public UserService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            _userRepository = userRepository;
-        }
-        public async Task<List<UserModel>> GetUsers()
-        {
-            return await _userRepository.GetUsers();
         }
 
-        public async Task<UserModel?> GetUser(int id)
+        public Task AddUser(SignUpInput user)
         {
-            return await _userRepository.GetUser(id);
+            throw new NotImplementedException();
         }
 
-        public async Task AddUser(CreateUserDto user)
+        public Task<UserModel?> GetUser(int id)
         {
-            await _userRepository.AddUser(user);
+            throw new NotImplementedException();
+        }
+
+        public Task<List<UserModel>> GetUsers()
+        {
+            throw new NotImplementedException();
         }
     }
 }

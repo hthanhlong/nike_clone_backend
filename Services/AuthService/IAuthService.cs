@@ -1,12 +1,12 @@
-using Reformation.Dtos.AuthDtos;
+using Reformation.Classes;
 using Reformation.Models;
 
 namespace Reformation.Services.AuthService
 {
     public interface IAuthService
     {
-        public Task SignUp(SignUpDto signUpDto);
-        public Task<object> SignIn(SignInDto signInDto);
+        public Task SignUp(SignUpInput signUpDto);
+        public Task<object> SignIn(SignInInput signInDto);
         public string GenerateAccessToken(object user);
         public string GenerateRefreshToken();
     }

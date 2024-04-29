@@ -1,13 +1,11 @@
 using Reformation.Database;
 using Microsoft.EntityFrameworkCore;
 using Reformation.Services.UserService;
-using Reformation.Repositories.UserRepository;
-using Reformation.Mappers.UserMappers;
-using Reformation.Mappers.AuthMappers;
 using Reformation.Services.AuthService;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
+using Reformation.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,11 +23,12 @@ builder.Services.AddCors(options =>
         builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddAutoMapper(typeof(UserMapper));
-builder.Services.AddAutoMapper(typeof(AuthMappers));
+
+
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

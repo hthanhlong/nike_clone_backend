@@ -1,6 +1,3 @@
-using AutoMapper;
-using Reformation.Dtos;
-using Reformation.Dtos.AuthDtos;
 using Reformation.Models;
 using Reformation.Repositories.UserRepository;
 using Reformation.Utils;
@@ -8,34 +5,32 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using Reformation.Classes;
+using Reformation.UnitOfWork;
 
 namespace Reformation.Services.AuthService
 {
-    public class AuthService : IAuthService
+    public class AuthService : GenericService, IAuthService
     {
         private readonly IConfiguration _configuration;
-        private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
-        public AuthService(IUserRepository userRepository, IMapper mapper, IConfiguration configuration)
+
+        public AuthService(IUnitOfWork unitOfWork, IConfiguration configuration) : base(unitOfWork)
         {
-            _userRepository = userRepository;
-            _mapper = mapper;
             _configuration = configuration;
         }
-        public async Task SignUp(SignUpDto signUpDto)
+        public async Task SignUp(SignUpInput signUpDto)
         {
-            var isUserExist = await _userRepository.GetUserByEmail(signUpDto.Email);
+            var isUserExist = await _unitOfWork.UserRepository.GetUserByEmail(signUpDto.Email);
             if (isUserExist != null)
             {
                 throw new Exception("User already exist");
             }
-            var newUser = _mapper.Map<CreateUserDto>(signUpDto);
-            await _userRepository.AddUser(newUser);
+            // await _unitOfWork.UserRepository.Insert(signUpDto);
         }
 
-        public async Task<object> SignIn(SignInDto signInDto)
+        public async Task<object> SignIn(SignInInput signInDto)
         {
-            var isUserExist = await _userRepository.GetUserByEmail(signInDto.Email);
+            var isUserExist = await _unitOfWork.UserRepository.GetUserByEmail(signInDto.Email);
             if (isUserExist == null)
             {
                 throw new Exception("User not found");
@@ -56,7 +51,8 @@ namespace Reformation.Services.AuthService
 
             var refreshToken = GenerateRefreshToken();
 
-            return new {
+            return new
+            {
                 AccessToken = AccessToken,
                 RefreshToken = refreshToken
             };

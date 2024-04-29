@@ -143,3 +143,6 @@
 /Users/meenadang/Private/Coding/Dot-net/Reformation/bin/Debug/net8.0/AutoMapper.dll
 /Users/meenadang/Private/Coding/Dot-net/Reformation/bin/Debug/net8.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 /Users/meenadang/Private/Coding/Dot-net/Reformation/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/meenadang/Private/Coding/Dot-net/Reformation/bin/Debug/net8.0/FluentValidation.dll
+/Users/meenadang/Private/Coding/Dot-net/Reformation/bin/Debug/net8.0/FluentValidation.AspNetCore.dll
+/Users/meenadang/Private/Coding/Dot-net/Reformation/bin/Debug/net8.0/FluentValidation.DependencyInjectionExtensions.dll

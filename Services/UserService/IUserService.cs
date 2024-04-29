@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Reformation.Dtos;
+
+using Reformation.Classes;
 using Reformation.Models;
 
 namespace Reformation.Services.UserService
@@ -11,7 +8,7 @@ namespace Reformation.Services.UserService
     {
         Task<UserModel?> GetUser(int id);
         Task<List<UserModel>> GetUsers();
-        Task AddUser(CreateUserDto user);
+        Task AddUser(SignUpInput user);
         // Task DeleteUser(int id);
         // Task UpdateUser(UserModel user);
     }

@@ -18,7 +18,7 @@ namespace Reformation.Core
 
     public class SuccessResponse : OkObjectResult
     {
-        public SuccessResponse(object data, string message) : base(null)
+        public SuccessResponse(object? data, string message) : base(null)
         {
             Value = new
             {

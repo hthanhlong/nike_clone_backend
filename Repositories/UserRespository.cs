@@ -1,0 +1,17 @@
+using Reformation.Database;
+using Reformation.Models;
+using Microsoft.EntityFrameworkCore;
+using Reformation.Utils;
+using Reformation.Classes;
+
+namespace Reformation.Repositories.UserRepository
+{
+    public class UserRepository(ApplicationDbContext context) : GenericRepository<UserModel>(context), IUserRepository
+    {
+        public async Task<UserModel?> GetUserByEmail(string email)
+        {
+            return await _context.UserModel.FirstOrDefaultAsync(user => user.Email == email);
+        }
+    }
+}
+

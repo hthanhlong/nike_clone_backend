@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
+using Reformation.Classes;
 using Reformation.Core;
-using Reformation.Dtos.AuthDtos;
 using Reformation.Services.AuthService;
 
 namespace Reformation.Controllers
 {
+    public delegate void MyEventHandler(string message);
     [ApiController]
     [Route("api/v1/[controller]")]
     public class AuthController : ControllerBase
@@ -16,12 +17,12 @@ namespace Reformation.Controllers
         }
 
         [HttpPost("sign-up")]
-        public async Task<ActionResult> SignUp(SignUpDto signUpDto)
+        public async Task<ActionResult> SignUp(SignUpInput signUpDto)
         {
             try
             {
                 await _authService.SignUp(signUpDto);
-                return new SuccessResponse(new { }, "User signed up successfully");
+                return new SuccessResponse(null, "User signed up successfully");
             }
             catch (Exception ex)
             {
@@ -30,7 +31,7 @@ namespace Reformation.Controllers
         }
 
         [HttpPost("sign-in")]
-        public async Task<ActionResult> SignIn(SignInDto signInDto)
+        public async Task<ActionResult> SignIn(SignInInput signInDto)
         {
             try
             {
@@ -44,10 +45,10 @@ namespace Reformation.Controllers
         }
 
         [HttpPost("refresh-token")]
-        public ActionResult RefreshToken([FromBody] RefreshTokenDto refreshTokenDto)
+        public ActionResult RefreshToken([FromBody] RefreshTokenInput refreshTokenDto)
         {
             Console.WriteLine(refreshTokenDto.RefreshToken);
-            return Ok(new SuccessResponse(new { }, "Token refreshed successfully").Value);
+            return Ok(new SuccessResponse(null, "Token refreshed successfully").Value);
         }
     }
 }

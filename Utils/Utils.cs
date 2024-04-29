@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 
 namespace Reformation.Utils
@@ -16,4 +17,20 @@ namespace Reformation.Utils
             return result == PasswordVerificationResult.Success;
         }
     }
+
+
+    public class ConfigurationCORS()
+    {
+        public static void CallBackMy(CorsOptions options)
+        {
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+            options.AddPolicy("AllowAllOrigins",
+                builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+        }
+    }
 }
+
