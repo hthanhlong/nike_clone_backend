@@ -3,34 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Reformation.Models;
+using Reformation.Services.RoleService;
+using Reformation.UnitOfWork;
 
 namespace Reformation.Services.PermissionService
 {
-    public class PermissionService : IPermissionService
+    public class PermissionService : GenericService, IPermissionService
     {
-        public Task<PermissionModel> AddPermission(PermissionModel permission)
+        public PermissionService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            throw new NotImplementedException();
+        }
+        public async Task<PermissionModel> AddPermission(PermissionModel permission)
+        {
+            await _unitOfWork.PermissionRepository.Insert(permission);
+            await _unitOfWork.SaveAsync();
+            return permission;
         }
 
-        public Task<PermissionModel> DeletePermission(int id)
+        public async Task DeletePermission(int id)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.PermissionRepository.Delete(id);
+            await _unitOfWork.SaveAsync();
         }
 
-        public Task<PermissionModel> GetPermission(int id)
+        public async Task<PermissionModel?> GetPermission(int id)
         {
-            throw new NotImplementedException();
+            return await _unitOfWork.PermissionRepository.GetByIDAsync(id);
         }
 
-        public Task<IEnumerable<PermissionModel>> GetPermissions()
+        public async Task<IEnumerable<PermissionModel>> GetPermissions()
         {
-            throw new NotImplementedException();
+            return await _unitOfWork.PermissionRepository.GetAllAsync();
         }
 
-        public Task<PermissionModel> UpdatePermission(PermissionModel permission)
+        public async Task UpdatePermission(PermissionModel permission)
         {
-            throw new NotImplementedException();
+            _unitOfWork.PermissionRepository.Update(permission);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

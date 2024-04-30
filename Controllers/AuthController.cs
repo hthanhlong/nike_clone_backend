@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Reformation.Classes;
 using Reformation.Core;
@@ -5,23 +6,30 @@ using Reformation.Services.AuthService;
 
 namespace Reformation.Controllers
 {
-    public delegate void MyEventHandler(string message);
     [ApiController]
     [Route("api/v1/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        public AuthController(IAuthService authService)
+        private IValidator<SignUpInput> _validator;
+        public AuthController(IAuthService authService, IValidator<SignUpInput> validator)
         {
             _authService = authService;
+            _validator = validator;
         }
 
         [HttpPost("sign-up")]
-        public async Task<ActionResult> SignUp(SignUpInput signUpDto)
+        public async Task<ActionResult> SignUp([FromBody] SignUpInput signUp)
         {
             try
             {
-                await _authService.SignUp(signUpDto);
+                FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(signUp);
+                if (!result.IsValid)
+                {
+                    var Errors = result.Errors.Select(x => x.ErrorMessage).ToList();
+                    return BadRequest(Errors);
+                }
+                await _authService.SignUp(signUp);
                 return new SuccessResponse(null, "User signed up successfully");
             }
             catch (Exception ex)
@@ -29,9 +37,8 @@ namespace Reformation.Controllers
                 return new BadRequestResponse(ex.Message);
             }
         }
-
         [HttpPost("sign-in")]
-        public async Task<ActionResult> SignIn(SignInInput signInDto)
+        public async Task<ActionResult> SignIn([FromBody] SignInInput signInDto)
         {
             try
             {

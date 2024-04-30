@@ -8,11 +8,11 @@ namespace Reformation.Services.RoleService
 {
     public interface IRoleService
     {
-        Task<RoleModel> GetRole(int id);
+        Task<RoleModel?> GetRole(int id);
         Task<IEnumerable<RoleModel>> GetRoles();
         Task<RoleModel> AddRole(RoleModel role);
-        Task<RoleModel> UpdateRole(RoleModel role);
-        Task<RoleModel> DeleteRole(int id);
+        Task UpdateRole(RoleModel role);
+        Task DeleteRole(int id);
 
     }
 }

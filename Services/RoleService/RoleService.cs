@@ -1,36 +1,42 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Reformation.Models;
+using Reformation.UnitOfWork;
 
 namespace Reformation.Services.RoleService
 {
-    public class RoleService : IRoleService
+    public class RoleService : GenericService, IRoleService
     {
-        public Task<RoleModel> AddRole(RoleModel role)
+        public RoleService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            throw new NotImplementedException();
         }
 
-        public Task<RoleModel> DeleteRole(int id)
+        public async Task<RoleModel> AddRole(RoleModel role)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.RoleRepository.Insert(role);
+            await _unitOfWork.SaveAsync();
+            return role;
+
         }
 
-        public Task<RoleModel> GetRole(int id)
+        public async Task DeleteRole(int id)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.RoleRepository.Delete(id);
+            await _unitOfWork.SaveAsync();
         }
 
-        public Task<IEnumerable<RoleModel>> GetRoles()
+        public async Task<RoleModel?> GetRole(int id)
         {
-            throw new NotImplementedException();
+            return await _unitOfWork.RoleRepository.GetByIDAsync(id);
         }
 
-        public Task<RoleModel> UpdateRole(RoleModel role)
+        public async Task<IEnumerable<RoleModel>> GetRoles()
         {
-            throw new NotImplementedException();
+            return await _unitOfWork.RoleRepository.GetAllAsync();
+        }
+
+        public async Task UpdateRole(RoleModel role)
+        {
+            _unitOfWork.RoleRepository.Update(role);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

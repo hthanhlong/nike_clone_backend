@@ -6,6 +6,12 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Reformation.UnitOfWork;
+using FluentValidation;
+using Reformation.Validators;
+using Reformation.Classes;
+using Reformation.Services.RoleService;
+using Reformation.Services.PermissionService;
+using Reformation.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,11 +29,15 @@ builder.Services.AddCors(options =>
         builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-
-
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IPermissionService, PermissionService>();
+builder.Services.AddScoped<IValidator<SignUpInput>, SignUpInputValidator>();
+builder.Services.AddScoped<IValidator<RoleModel>, RoleModelValidator>();
+builder.Services.AddScoped<IValidator<PermissionModel>, PermissionModelValidator>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

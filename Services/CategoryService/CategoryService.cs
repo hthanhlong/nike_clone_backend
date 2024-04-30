@@ -28,13 +28,13 @@ namespace Reformation.Services.CategoryService
 
         async Task ICategoryService.DeleteCategory(int id)
         {
-            await _unitOfWork.CategoryRepository.DeleteAsync(id);
+            await _unitOfWork.CategoryRepository.Delete(id);
             await _unitOfWork.SaveAsync();
         }
 
         async Task<CategoryModel> ICategoryService.UpdateCategory(CategoryModel category)
         {
-            _unitOfWork.CategoryRepository.UpdateAsync(category);
+            _unitOfWork.CategoryRepository.Update(category);
             await _unitOfWork.SaveAsync();
             return category;
         }

@@ -2,35 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Reformation.Database;
 using Reformation.Models;
 
 namespace Reformation.Repositories.RoleRepository
 {
-    public class RoleRepository
+    public class RoleRepository : GenericRepository<RoleModel>
     {
-        public Task<RoleModel> AddRole(RoleModel role)
+        public RoleRepository(ApplicationDbContext context) : base(context)
         {
-            throw new NotImplementedException();
         }
 
-        public Task<RoleModel> DeleteRole(int id)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<RoleModel> GetRole(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<RoleModel>> GetRoles()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<RoleModel> UpdateRole(RoleModel role)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

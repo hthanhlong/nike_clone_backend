@@ -7,6 +7,7 @@ namespace Reformation.Models
     public class ProductModel
     {
         public int Id { get; set; }
+        public required int Version { get; set; }
         [MaxLength(400)]
         public string? Name { get; set; }
         public string? Description { get; set; }

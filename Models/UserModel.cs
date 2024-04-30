@@ -8,7 +8,9 @@ namespace Reformation.Models
     {
         public int Id { get; set; }
         [MaxLength(120)]
-        public required string Name { get; set; }
+        public required string FirstName { get; set; }
+        [MaxLength(120)]
+        public required string LastName { get; set; }
         [MaxLength(160), EmailAddress]
         public required string Email { get; set; }
         [MaxLength(120)]
@@ -30,9 +32,8 @@ namespace Reformation.Models
         [MaxLength(160)]
         public string? ZipCode { get; set; }
         [MaxLength(160)]
-        public string? Phone_1 { get; set; }
+        public string? Phone { get; set; }
         [MaxLength(160)]
-        public string? Phone_2 { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }

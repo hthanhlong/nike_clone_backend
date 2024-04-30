@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Reformation.Models;
+using Reformation.Services.RoleService;
 
 namespace Reformation.Controllers
 {
@@ -12,9 +9,12 @@ namespace Reformation.Controllers
     [Route("api/v1/[controller]")]
     public class RoleController : ControllerBase
     {
-
-        public RoleController()
+        private IValidator<RoleModel> _validator;
+        private readonly IRoleService _roleService;
+        public RoleController(IValidator<RoleModel> validator, IRoleService roleService)
         {
+            _validator = validator;
+            _roleService = roleService;
         }
 
         [HttpGet]
@@ -30,9 +30,22 @@ namespace Reformation.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddRole()
+        public async Task<IActionResult> AddRole([FromBody] RoleModel role)
         {
-            return Ok();
+            try
+            {
+                var result = await _validator.ValidateAsync(role);
+                if (!result.IsValid)
+                {
+                    return BadRequest(result.Errors);
+                }
+                await _roleService.AddRole(role);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("{id}")]

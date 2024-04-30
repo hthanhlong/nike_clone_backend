@@ -25,7 +25,18 @@ namespace Reformation.Services.AuthService
             {
                 throw new Exception("User already exist");
             }
-            // await _unitOfWork.UserRepository.Insert(signUpDto);
+            var User = new UserModel
+            {
+                Email = signUpDto.Email,
+                FirstName = signUpDto.FirstName,
+                LastName = signUpDto.LastName,
+                Password = new PasswordHasherUtils().HashPassword(signUpDto.Password),
+                Role = new RoleModel { Name = "User" },
+                Permission = new PermissionModel { Action = "User", Resource = "User" }
+            };
+
+            await _unitOfWork.UserRepository.Insert(User);
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<object> SignIn(SignInInput signInDto)
