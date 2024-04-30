@@ -12,7 +12,7 @@ using Reformation.Database;
 namespace Reformation.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240430050936_add salt in user model")]
+    [Migration("20240430171853_add salt in usermodel")]
     partial class addsaltinusermodel
     {
         /// <inheritdoc />

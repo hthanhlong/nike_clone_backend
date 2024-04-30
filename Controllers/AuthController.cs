@@ -11,15 +11,15 @@ namespace Reformation.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        private IValidator<SignUpInput> _validator;
-        public AuthController(IAuthService authService, IValidator<SignUpInput> validator)
+        private IValidator<ISignUp> _validator;
+        public AuthController(IAuthService authService, IValidator<ISignUp> validator)
         {
             _authService = authService;
             _validator = validator;
         }
 
         [HttpPost("sign-up")]
-        public async Task<ActionResult> SignUp([FromBody] SignUpInput signUp)
+        public async Task<ActionResult> SignUp([FromBody] ISignUp signUp)
         {
             try
             {
@@ -38,11 +38,11 @@ namespace Reformation.Controllers
             }
         }
         [HttpPost("sign-in")]
-        public async Task<ActionResult> SignIn([FromBody] SignInInput signInDto)
+        public async Task<ActionResult> SignIn([FromBody] ISignIn signIn)
         {
             try
             {
-                var tokens = await _authService.SignIn(signInDto);
+                var tokens = await _authService.SignIn(signIn);
                 return new SuccessResponse(new { tokens }, "User signed In successfully");
             }
             catch (Exception ex)
@@ -52,10 +52,17 @@ namespace Reformation.Controllers
         }
 
         [HttpPost("refresh-token")]
-        public ActionResult RefreshToken([FromBody] RefreshTokenInput refreshTokenDto)
+        public async Task<ActionResult> GetNewAccessToken([FromBody] IRefreshToken refreshToken)
         {
-            Console.WriteLine(refreshTokenDto.RefreshToken);
-            return Ok(new SuccessResponse(null, "Token refreshed successfully").Value);
+            try
+            {
+                var tokens = await _authService.GetNewAccessToken(refreshToken);
+                return new SuccessResponse(new { AccessToken = tokens }, "New access token generated successfully");
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestResponse(ex.Message);
+            }
         }
     }
 }

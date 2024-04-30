@@ -1,10 +1,12 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Reformation.Models;
 using Reformation.Services.RoleService;
 
 namespace Reformation.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class RoleController : ControllerBase

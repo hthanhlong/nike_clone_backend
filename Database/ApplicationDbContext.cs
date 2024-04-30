@@ -17,6 +17,7 @@ namespace Reformation.Database
         public DbSet<TransactionModel> TransactionModel { get; set; }
         public DbSet<CategoryModel> CategoryModel { get; set; }
         public DbSet<WarehouseModel> WarehouseModel { get; set; }
+        public DbSet<RefreshTokenModel> RefreshTokenModel { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserModel>()

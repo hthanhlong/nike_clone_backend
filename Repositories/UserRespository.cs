@@ -1,8 +1,7 @@
 using Reformation.Database;
 using Reformation.Models;
 using Microsoft.EntityFrameworkCore;
-using Reformation.Utils;
-using Reformation.Classes;
+using Reformation.Repositories.Interface;
 
 namespace Reformation.Repositories.UserRepository
 {

@@ -3,9 +3,9 @@ using Reformation.Classes;
 
 namespace Reformation.Validators
 {
-    public class SignInInputValidator : AbstractValidator<SignInInput>
+    public class SignInValidator : AbstractValidator<ISignIn>
     {
-        public SignInInputValidator()
+        public SignInValidator()
         {
             RuleFor(x => x.Email).NotNull().EmailAddress();
             RuleFor(x => x.Password).NotNull();

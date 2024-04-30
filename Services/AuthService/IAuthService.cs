@@ -5,10 +5,9 @@ namespace Reformation.Services.AuthService
 {
     public interface IAuthService
     {
-        public Task SignUp(SignUpInput signUpDto);
-        public Task<object> SignIn(SignInInput signInDto);
-        public string GenerateAccessToken(object user);
-        public string GenerateRefreshToken();
+        public Task SignUp(ISignUp signUp);
+        public Task<object> SignIn(ISignIn signIn);
+        public Task<string?> GetNewAccessToken(IRefreshToken refreshToken);
     }
 }
 

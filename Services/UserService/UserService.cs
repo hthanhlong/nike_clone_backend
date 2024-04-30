@@ -9,7 +9,7 @@ namespace Reformation.Services.UserService
         {
         }
 
-        public Task AddUser(SignUpInput user)
+        public Task AddUser(ISignUp user)
         {
             throw new NotImplementedException();
         }

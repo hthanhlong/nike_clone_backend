@@ -1,9 +1,5 @@
 using Reformation.Models;
 using Reformation.Utils;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
 using Reformation.Classes;
 using Reformation.UnitOfWork;
 
@@ -12,114 +8,86 @@ namespace Reformation.Services.AuthService
     public class AuthService : GenericService, IAuthService
     {
         private readonly IConfiguration _configuration;
+        private readonly PasswordHarsherUtils _passwordHarsher = new PasswordHarsherUtils();
+        private readonly JWTUtils _jwtUtils;
+        
         public AuthService(IUnitOfWork unitOfWork, IConfiguration configuration) : base(unitOfWork)
         {
             _configuration = configuration;
-            
+            _jwtUtils = new JWTUtils(_configuration);
         }
-        public async Task SignUp(SignUpInput signUpDto)
+        public async Task SignUp(ISignUp signUp)
         {
-            var isUserExist = await _unitOfWork.UserRepository.GetUserByEmail(signUpDto.Email);
+            var isUserExist = await _unitOfWork.UserRepository.GetUserByEmail(signUp.Email);
             if (isUserExist != null)
             {
                 throw new Exception("User already exist");
             }
-            var passwordHasher = new PasswordHasherUtils();
-            var salt = passwordHasher.GenerateSalt();
+            var (hashPass, salt) = _passwordHarsher.HashPassword(signUp.Password);
+
+            RoleModel? Role = await _unitOfWork.RoleRepository.GetByIDAsync(signUp.RoleId) ?? throw new Exception("Role not found");
+            PermissionModel? Permission = await _unitOfWork.PermissionRepository.GetByIDAsync(signUp.PermissionId) ?? throw new Exception("Permission not found");
+
             var User = new UserModel
             {
-                Email = signUpDto.Email,
-                FirstName = signUpDto.FirstName,
-                LastName = signUpDto.LastName,
-                Password = passwordHasher.HashPassword(signUpDto.Password, salt),
+                Email = signUp.Email,
+                FirstName = signUp.FirstName,
+                LastName = signUp.LastName,
+                Password = hashPass,
                 Salt = salt,
-                Role = new RoleModel { Name = "Buyer" },
-                Permission = new PermissionModel { Action = "Read", Resource = "UserModel" }
+                Role = Role,
+                Permission = Permission
             };
             await _unitOfWork.UserRepository.Insert(User);
             await _unitOfWork.SaveAsync();
         }
-
-        public async Task<object> SignIn(SignInInput signInDto)
+        public async Task<object> SignIn(ISignIn signInDto)
         {
-            var isUserExist = await _unitOfWork.UserRepository.GetUserByEmail(signInDto.Email);
-            if (isUserExist == null)
-            {
-                throw new Exception("User not found");
-            }
-            var hashedPassword = isUserExist.Password;
-            var salt = isUserExist.Salt;
-            var passwordHasher = new PasswordHasherUtils();
-            var isPasswordCorrect = passwordHasher.VerifyPassword(hashedPassword, signInDto.Password, salt);
-            if (!isPasswordCorrect)
-            {
-                throw new Exception("Invalid password");
-            }
+            var user = await _unitOfWork.UserRepository.GetUserByEmail(signInDto.Email) ?? throw new Exception("User not found");
+            var hashedPassword = user.Password;
+            var salt = user.Salt;
+            var isPasswordCorrect = _passwordHarsher.VerifyPassword(hashedPassword, signInDto.Password, salt);
+            if (!isPasswordCorrect) throw new Exception("Invalid password");
 
-            var AccessToken = GenerateAccessToken(new
-            {
-                Email = isUserExist.Email,
-                Id = isUserExist.Id
-            });
+            var AccessToken = _jwtUtils.GenerateAccessToken(user.Id);
+            var RefreshToken = _jwtUtils.GenerateRefreshToken(user.Id);
 
-            var refreshToken = GenerateRefreshToken();
+            RefreshTokenModel refreshToken = new()
+            {
+                User = user,
+                RefreshToken = RefreshToken,
+                Expires = DateTime.Now.AddDays(30),
+                IsRevoked = false
+            };
+
+            await _unitOfWork.RefreshTokenRepository.Insert(refreshToken); 
+            await _unitOfWork.SaveAsync();  
 
             return new
-            {
-                AccessToken = AccessToken,
-                RefreshToken = refreshToken
+            {   UserId = user.Id,
+                user.Email,
+                AccessToken,
+                RefreshToken
             };
-
-        }
-        public string GenerateAccessToken(object user)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var jwtKey = _configuration["Jwt:ACCESS_KEY"];
-
-            if (jwtKey == null)
-            {
-                throw new Exception("Jwt key not found");
-            }
-            var keyBytes = Encoding.ASCII.GetBytes(jwtKey);
-            var signingKey = new SymmetricSecurityKey(keyBytes);
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, ((dynamic)user).Id.ToString()),
-                    new Claim(ClaimTypes.Email, ((dynamic)user).Email)
-                }),
-                Expires = DateTime.UtcNow.AddHours(_configuration.GetValue<int>("Jwt:ACCESS_TOKEN_EXPIRE")),
-                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
         }
 
-        public string GenerateRefreshToken()
+        public async Task<string?> GetNewAccessToken(IRefreshToken refreshToken)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var jwtKey = _configuration["Jwt:REFRESH_KEY"];
-            var jwtExpire = _configuration["Jwt:REFRESH_TOKEN_EXPIRE"];
-            if (jwtKey == null)
-            {
-                throw new Exception("Jwt key not found");
+            try
+            {   
+                Console.WriteLine(refreshToken);
+                // validate refresh token
+                RefreshTokenModel refreshTokenModel = await _unitOfWork.RefreshTokenRepository.GetByToken(refreshToken.RefreshToken) ?? throw new Exception("Refresh token not found");
+                if (refreshTokenModel.IsRevoked) throw new Exception("Refresh token revoked");
+                if (refreshTokenModel.Expires < DateTime.Now) throw new Exception("Refresh token expired");
+                return _jwtUtils.GetNewAccessToken(refreshToken);
             }
-            var keyBytes = Encoding.ASCII.GetBytes(jwtKey);
-            var signingKey = new SymmetricSecurityKey(keyBytes);
-            var randomNumber = new byte[32];
-            var tokenDescriptor = new SecurityTokenDescriptor
+            catch (Exception ex)
             {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, randomNumber.ToString() ?? string.Empty)
-                }),
-                Expires = DateTime.UtcNow.AddDays(Convert.ToInt32(jwtExpire)),
-                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+                Console.WriteLine($"Token validation failed: {ex.Message}");
+                return null;
+            }
+           
         }
     }
 }

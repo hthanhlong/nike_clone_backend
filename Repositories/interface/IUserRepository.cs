@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Reformation.Models;
 
-namespace Reformation.Repositories
+namespace Reformation.Repositories.Interface
 {
     public interface IUserRepository
     {

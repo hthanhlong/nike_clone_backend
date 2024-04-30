@@ -8,7 +8,7 @@ namespace Reformation.Services.UserService
     {
         Task<UserModel?> GetUser(int id);
         Task<List<UserModel>> GetUsers();
-        Task AddUser(SignUpInput user);
+        Task AddUser(ISignUp user);
         // Task DeleteUser(int id);
         // Task UpdateUser(UserModel user);
     }

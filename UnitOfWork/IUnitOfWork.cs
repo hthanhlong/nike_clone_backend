@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Reformation.Models;
 using Reformation.Repositories;
 using Reformation.Repositories.CategoryRepository;
 using Reformation.Repositories.PermissionRepository;
@@ -17,6 +12,7 @@ namespace Reformation.UnitOfWork
         public UserRepository UserRepository { get; }
         public RoleRepository RoleRepository { get; }
         public PermissionRepository PermissionRepository { get; }
+        public RefreshTokenRepository RefreshTokenRepository  { get; }
         public Task SaveAsync();
     }
 }

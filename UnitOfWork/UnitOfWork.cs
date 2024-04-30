@@ -8,17 +8,16 @@ using Reformation.Repositories.UserRepository;
 
 namespace Reformation.UnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
         private CategoryRepository categoryRepository;
         private UserRepository userRepository;
         private RoleRepository roleRepository;
         private PermissionRepository permissionRepository;
-        private readonly ApplicationDbContext _context;
-        public UnitOfWork(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        private RefreshTokenRepository  refreshTokenRepository;
+        private readonly ApplicationDbContext _context = context;
 
         // CategoryRepository -----------------------
         public CategoryRepository CategoryRepository
@@ -46,12 +45,7 @@ namespace Reformation.UnitOfWork
                 return userRepository;
             }
         }
-
-
-
         // RoleRepository -----------------------
-
-
         public RoleRepository RoleRepository
         {
             get
@@ -63,9 +57,7 @@ namespace Reformation.UnitOfWork
                 return roleRepository;
             }
         }
-
         // PermissionRepository -----------------------
-
         public PermissionRepository PermissionRepository
         {
             get
@@ -77,8 +69,18 @@ namespace Reformation.UnitOfWork
                 return permissionRepository;
             }
         }
-
-
+        // PermissionRepository -----------------------
+        public RefreshTokenRepository RefreshTokenRepository
+        {
+            get
+            {
+                if (this.refreshTokenRepository == null)
+                {
+                    this.refreshTokenRepository = new RefreshTokenRepository(_context);
+                }
+                return refreshTokenRepository;
+            }
+        }
         private bool disposed = false;
 
         protected virtual void Dispose(bool disposing)
