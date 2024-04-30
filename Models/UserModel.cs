@@ -15,6 +15,7 @@ namespace Reformation.Models
         public required string Email { get; set; }
         [MaxLength(120)]
         public required string Password { get; set; }
+        public required string Salt { get; set; } = "";
         public required RoleModel Role { get; set; }
         public required PermissionModel Permission { get; set; }
         public string? Image { get; set; }

@@ -5,16 +5,27 @@ namespace Reformation.Utils
 {
     public class PasswordHasherUtils
     {
-        public string HashPassword(string password)
+
+        public string GenerateSalt()
         {
-            var hasher = new PasswordHasher<object>();
-            return hasher.HashPassword(null!, password);
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new Random();
+            var saltChars = new char[16];
+            for (int i = 0; i < saltChars.Length; i++)
+            {
+                saltChars[i] = chars[random.Next(chars.Length)];
+            }
+            return new string(saltChars);
         }
-        public bool VerifyPassword(string hashedPassword, string providedPassword)
+        public string HashPassword(string password, string salt)
         {
             var hasher = new PasswordHasher<object>();
-            var result = hasher.VerifyHashedPassword(null!, hashedPassword, providedPassword);
-            return result == PasswordVerificationResult.Success;
+            return hasher.HashPassword(salt, password);
+        }
+        public bool VerifyPassword(string hashedPassword, string providedPassword, string salt)
+        {
+            var _hashedPassword = HashPassword(providedPassword, salt);
+            return _hashedPassword == hashedPassword;
         }
     }
 

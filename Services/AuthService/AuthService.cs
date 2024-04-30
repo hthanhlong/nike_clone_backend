@@ -1,5 +1,4 @@
 using Reformation.Models;
-using Reformation.Repositories.UserRepository;
 using Reformation.Utils;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -13,10 +12,10 @@ namespace Reformation.Services.AuthService
     public class AuthService : GenericService, IAuthService
     {
         private readonly IConfiguration _configuration;
-
         public AuthService(IUnitOfWork unitOfWork, IConfiguration configuration) : base(unitOfWork)
         {
             _configuration = configuration;
+            
         }
         public async Task SignUp(SignUpInput signUpDto)
         {
@@ -25,16 +24,18 @@ namespace Reformation.Services.AuthService
             {
                 throw new Exception("User already exist");
             }
+            var passwordHasher = new PasswordHasherUtils();
+            var salt = passwordHasher.GenerateSalt();
             var User = new UserModel
             {
                 Email = signUpDto.Email,
                 FirstName = signUpDto.FirstName,
                 LastName = signUpDto.LastName,
-                Password = new PasswordHasherUtils().HashPassword(signUpDto.Password),
-                Role = new RoleModel { Name = "User" },
-                Permission = new PermissionModel { Action = "User", Resource = "User" }
+                Password = passwordHasher.HashPassword(signUpDto.Password, salt),
+                Salt = salt,
+                Role = new RoleModel { Name = "Buyer" },
+                Permission = new PermissionModel { Action = "Read", Resource = "UserModel" }
             };
-
             await _unitOfWork.UserRepository.Insert(User);
             await _unitOfWork.SaveAsync();
         }
@@ -47,8 +48,9 @@ namespace Reformation.Services.AuthService
                 throw new Exception("User not found");
             }
             var hashedPassword = isUserExist.Password;
+            var salt = isUserExist.Salt;
             var passwordHasher = new PasswordHasherUtils();
-            var isPasswordCorrect = passwordHasher.VerifyPassword(hashedPassword, signInDto.Password);
+            var isPasswordCorrect = passwordHasher.VerifyPassword(hashedPassword, signInDto.Password, salt);
             if (!isPasswordCorrect)
             {
                 throw new Exception("Invalid password");
