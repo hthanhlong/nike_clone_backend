@@ -1,10 +1,9 @@
-using Reformation.Models;
-using Reformation.Utils;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Reformation.Classes;
+using Reformation.Models;
 using Reformation.UnitOfWork;
 
 namespace Reformation.Utils
@@ -18,56 +17,57 @@ namespace Reformation.Utils
             _configuration = configuration;
             _jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
         }
-        public string GenerateAccessToken(dynamic Id)
+        public string GenerateAccessToken(UserModel user)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
             var jwtKey = _configuration["Jwt:ACCESS_KEY"];
-
             if (jwtKey == null)
             {
                 throw new Exception("Jwt key not found");
             }
             var keyBytes = Encoding.ASCII.GetBytes(jwtKey);
             var signingKey = new SymmetricSecurityKey(keyBytes);
-
+            var Expires = DateTime.UtcNow.AddHours(_configuration.GetValue<int>("Jwt:ACCESS_TOKEN_EXPIRE"));
+            var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+            var Subs = new ClaimsIdentity(
+                [
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Role, user.Role.Name)
+                ]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(
-                [
-                    new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
-                ]),
-                Expires = DateTime.UtcNow.AddHours(_configuration.GetValue<int>("Jwt:ACCESS_TOKEN_EXPIRE")),
-                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256Signature)
+                Subject = Subs,
+                Expires = Expires,
+                SigningCredentials = credentials
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            return _jwtSecurityTokenHandler.WriteToken(_jwtSecurityTokenHandler.CreateToken(tokenDescriptor));
         }
-        public string GenerateRefreshToken(dynamic Id)
+        public string GenerateRefreshToken(string Id, string Email)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
             var jwtKey = _configuration["Jwt:REFRESH_KEY"] ?? throw new Exception("Jwt key not found");
             var jwtExpire = _configuration["Jwt:REFRESH_TOKEN_EXPIRE"];
             var keyBytes = Encoding.ASCII.GetBytes(jwtKey);
             var signingKey = new SymmetricSecurityKey(keyBytes);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(
+            var Subs = new ClaimsIdentity(
                 [
                     new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
-                ]),
+                    new Claim(ClaimTypes.Email, Email),
+                ]);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = Subs,
                 Expires = DateTime.UtcNow.AddDays(Convert.ToInt32(jwtExpire)),
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256Signature)
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            var token = _jwtSecurityTokenHandler.CreateToken(tokenDescriptor);
+            return _jwtSecurityTokenHandler.WriteToken(token);
         }
-        public string GetNewAccessToken(IRefreshToken refreshToken)
+        public string ValidateRefreshToken(IRefreshToken refreshToken)
         {
             try
             {
                 var jwtKey = _configuration["Jwt:REFRESH_KEY"] ?? throw new Exception("Jwt key not found");
-                var keyBytes = Encoding.ASCII.GetBytes(jwtKey);
-                var signingKey = new SymmetricSecurityKey(keyBytes);
+                var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtKey));
                 var tokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
@@ -83,12 +83,8 @@ namespace Reformation.Utils
                 {
                     throw new SecurityTokenException("Invalid token");
                 }
-                var claim = principal.FindFirst(ClaimTypes.NameIdentifier) ?? throw new Exception("Invalid token");     
-                Console.WriteLine(new {
-                    name="claim.Value",
-                    value=claim.Value
-                });
-                return GenerateAccessToken(claim.Value);   
+                var claim = principal.FindFirst(ClaimTypes.Email) ?? throw new Exception("Invalid token");
+                return claim.Value;
             }
             catch (System.Exception)
             {

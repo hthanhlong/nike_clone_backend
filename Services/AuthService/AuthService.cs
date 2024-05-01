@@ -10,7 +10,7 @@ namespace Reformation.Services.AuthService
         private readonly IConfiguration _configuration;
         private readonly PasswordHarsherUtils _passwordHarsher = new PasswordHarsherUtils();
         private readonly JWTUtils _jwtUtils;
-        
+
         public AuthService(IUnitOfWork unitOfWork, IConfiguration configuration) : base(unitOfWork)
         {
             _configuration = configuration;
@@ -49,8 +49,8 @@ namespace Reformation.Services.AuthService
             var isPasswordCorrect = _passwordHarsher.VerifyPassword(hashedPassword, signInDto.Password, salt);
             if (!isPasswordCorrect) throw new Exception("Invalid password");
 
-            var AccessToken = _jwtUtils.GenerateAccessToken(user.Id);
-            var RefreshToken = _jwtUtils.GenerateRefreshToken(user.Id);
+            var AccessToken = _jwtUtils.GenerateAccessToken(user);
+            var RefreshToken = _jwtUtils.GenerateRefreshToken(user.Id.ToString(), user.Email);
 
             RefreshTokenModel refreshToken = new()
             {
@@ -60,11 +60,12 @@ namespace Reformation.Services.AuthService
                 IsRevoked = false
             };
 
-            await _unitOfWork.RefreshTokenRepository.Insert(refreshToken); 
-            await _unitOfWork.SaveAsync();  
+            await _unitOfWork.RefreshTokenRepository.Insert(refreshToken);
+            await _unitOfWork.SaveAsync();
 
             return new
-            {   UserId = user.Id,
+            {
+                UserId = user.Id,
                 user.Email,
                 AccessToken,
                 RefreshToken
@@ -74,20 +75,30 @@ namespace Reformation.Services.AuthService
         public async Task<string?> GetNewAccessToken(IRefreshToken refreshToken)
         {
             try
-            {   
-                Console.WriteLine(refreshToken);
-                // validate refresh token
+            {
                 RefreshTokenModel refreshTokenModel = await _unitOfWork.RefreshTokenRepository.GetByToken(refreshToken.RefreshToken) ?? throw new Exception("Refresh token not found");
                 if (refreshTokenModel.IsRevoked) throw new Exception("Refresh token revoked");
                 if (refreshTokenModel.Expires < DateTime.Now) throw new Exception("Refresh token expired");
-                return _jwtUtils.GetNewAccessToken(refreshToken);
+                var value = _jwtUtils.ValidateRefreshToken(refreshToken);
+                if (value == null) throw new Exception("Token validation failed");
+                Console.WriteLine(value);
+                var user = await _unitOfWork.UserRepository.GetUserByEmail(value) ?? throw new Exception("User not found");
+                var AccessToken = _jwtUtils.GenerateAccessToken(user);
+                Console.WriteLine(AccessToken);
+                return AccessToken;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Token validation failed: {ex.Message}");
                 return null;
             }
-           
+        }
+
+        public async Task RevokeRefreshToken(IRefreshToken refreshToken)
+        {
+            RefreshTokenModel refreshTokenModel = await _unitOfWork.RefreshTokenRepository.GetByToken(refreshToken.RefreshToken) ?? throw new Exception("Refresh token not found");
+            refreshTokenModel.IsRevoked = true;
+            await _unitOfWork.SaveAsync();
         }
     }
 }

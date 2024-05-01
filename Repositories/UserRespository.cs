@@ -9,7 +9,7 @@ namespace Reformation.Repositories.UserRepository
     {
         public async Task<UserModel?> GetUserByEmail(string email)
         {
-            return await _context.UserModel.FirstOrDefaultAsync(user => user.Email == email);
+            return await _context.UserModel.Include("Role").FirstOrDefaultAsync(user => user.Email == email);
         }
     }
 }

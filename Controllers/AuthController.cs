@@ -57,6 +57,7 @@ namespace Reformation.Controllers
             try
             {
                 var tokens = await _authService.GetNewAccessToken(refreshToken);
+                Console.WriteLine(tokens);
                 return new SuccessResponse(new { AccessToken = tokens }, "New access token generated successfully");
             }
             catch (Exception ex)

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Reformation.Database;
 using Reformation.Models;
 using Reformation.Repositories.Interface;
@@ -14,9 +15,9 @@ namespace Reformation.Repositories
         {
         }
 
-        public Task<RefreshTokenModel?> GetByToken(string token)
+        public async Task<RefreshTokenModel?> GetByToken(string token)
         {
-            return Task.FromResult(_context.RefreshTokenModel.FirstOrDefault(x => x.RefreshToken == token));
+            return await _context.RefreshTokenModel.FirstAsync(rt => rt.RefreshToken == token);
         }
     }
 }

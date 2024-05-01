@@ -8,6 +8,7 @@ namespace Reformation.Services.AuthService
         public Task SignUp(ISignUp signUp);
         public Task<object> SignIn(ISignIn signIn);
         public Task<string?> GetNewAccessToken(IRefreshToken refreshToken);
+        public Task RevokeRefreshToken(IRefreshToken refreshToken);
     }
 }
 
