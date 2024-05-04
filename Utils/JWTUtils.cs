@@ -2,11 +2,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Reformation.Classes;
-using Reformation.Models;
-using Reformation.UnitOfWork;
+using Nike_clone_Backend.Classes;
+using Nike_clone_Backend.Models;
+using Nike_clone_Backend.UnitOfWork;
 
-namespace Reformation.Utils
+namespace Nike_clone_Backend.Utils
 {
     public class JWTUtils
     {

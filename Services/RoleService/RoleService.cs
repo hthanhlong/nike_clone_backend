@@ -1,7 +1,7 @@
-using Reformation.Models;
-using Reformation.UnitOfWork;
+using Nike_clone_Backend.Models;
+using Nike_clone_Backend.UnitOfWork;
 
-namespace Reformation.Services.RoleService
+namespace Nike_clone_Backend.Services.RoleService
 {
     public class RoleService : GenericService, IRoleService
     {

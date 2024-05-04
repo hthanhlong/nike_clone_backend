@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace Reformation.Models
+namespace Nike_clone_Backend.Models
 {
     public class ProductModel
     {

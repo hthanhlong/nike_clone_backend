@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
-using Reformation.Models;
+using Nike_clone_Backend.Models;
 
-namespace Reformation.Validators
+namespace Nike_clone_Backend.Validators
 {
     public class RoleModelValidator : AbstractValidator<RoleModel>
     {

@@ -8,10 +8,10 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Reformation.Models;
-using Reformation.Services.CategoryService;
+using Nike_clone_Backend.Models;
+using Nike_clone_Backend.Services.CategoryService;
 
-namespace Reformation.Controllers
+namespace Nike_clone_Backend.Controllers
 {
     [Authorize]
     [ApiController]

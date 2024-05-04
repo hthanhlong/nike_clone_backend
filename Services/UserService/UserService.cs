@@ -1,7 +1,7 @@
-using Reformation.Classes;
-using Reformation.Models;
-using Reformation.UnitOfWork;
-namespace Reformation.Services.UserService
+using Nike_clone_Backend.Classes;
+using Nike_clone_Backend.Models;
+using Nike_clone_Backend.UnitOfWork;
+namespace Nike_clone_Backend.Services.UserService
 {
     public class UserService : GenericService, IUserService
     {

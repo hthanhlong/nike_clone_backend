@@ -1,8 +1,8 @@
 using FluentValidation;
-using Reformation.Classes;
-using Reformation.Models;
+using Nike_clone_Backend.Classes;
+using Nike_clone_Backend.Models;
 
-namespace Reformation.Validators
+namespace Nike_clone_Backend.Validators
 {
     public class SignUpValidator : AbstractValidator<ISignUp>
     {

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Reformation.Models;
+using Nike_clone_Backend.Models;
 
-namespace Reformation.Repositories.WarehouseRepository
+namespace Nike_clone_Backend.Repositories.WarehouseRepository
 {
     public class WarehouseRepository
     {

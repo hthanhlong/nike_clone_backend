@@ -1,18 +1,18 @@
-using Reformation.Database;
-using Microsoft.EntityFrameworkCore;
-using Reformation.Services.UserService;
-using Reformation.Services.AuthService;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
-using Reformation.UnitOfWork;
 using FluentValidation;
-using Reformation.Validators;
-using Reformation.Classes;
-using Reformation.Services.RoleService;
-using Reformation.Services.PermissionService;
-using Reformation.Models;
-using Reformation.Utils;
+using System.Text;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Nike_clone_Backend.Database;
+using Nike_clone_Backend.Services.AuthService;
+using Nike_clone_Backend.Services.UserService;
+using Nike_clone_Backend.UnitOfWork;
+using Nike_clone_Backend.Validators;
+using Nike_clone_Backend.Classes;
+using Nike_clone_Backend.Services.RoleService;
+using Nike_clone_Backend.Services.PermissionService;
+using Nike_clone_Backend.Models;
+using Nike_clone_Backend.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 

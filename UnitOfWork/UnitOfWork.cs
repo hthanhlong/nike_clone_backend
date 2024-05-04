@@ -1,12 +1,12 @@
-using Reformation.Database;
-using Reformation.Models;
-using Reformation.Repositories;
-using Reformation.Repositories.CategoryRepository;
-using Reformation.Repositories.PermissionRepository;
-using Reformation.Repositories.RoleRepository;
-using Reformation.Repositories.UserRepository;
+using Nike_clone_Backend.Database;
+using Nike_clone_Backend.Models;
+using Nike_clone_Backend.Repositories;
+using Nike_clone_Backend.Repositories.CategoryRepository;
+using Nike_clone_Backend.Repositories.PermissionRepository;
+using Nike_clone_Backend.Repositories.RoleRepository;
+using Nike_clone_Backend.Repositories.UserRepository;
 
-namespace Reformation.UnitOfWork
+namespace Nike_clone_Backend.UnitOfWork
 {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
@@ -16,7 +16,7 @@ namespace Reformation.UnitOfWork
         private UserRepository userRepository;
         private RoleRepository roleRepository;
         private PermissionRepository permissionRepository;
-        private RefreshTokenRepository  refreshTokenRepository;
+        private RefreshTokenRepository refreshTokenRepository;
         private readonly ApplicationDbContext _context = context;
 
         // CategoryRepository -----------------------

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Reformation.Database;
+using Nike_clone_Backend.Database;
 
 #nullable disable
 
-namespace Reformation.Migrations
+namespace Nike_clone_Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20240422060103_AddUserModel")]
@@ -24,7 +24,7 @@ namespace Reformation.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Reformation.Models.UserModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.UserModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

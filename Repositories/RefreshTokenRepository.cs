@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Reformation.Database;
-using Reformation.Models;
-using Reformation.Repositories.Interface;
+using Nike_clone_Backend.Database;
+using Nike_clone_Backend.Models;
+using Nike_clone_Backend.Repositories.Interface;
 
-namespace Reformation.Repositories
+namespace Nike_clone_Backend.Repositories
 {
     public class RefreshTokenRepository : GenericRepository<RefreshTokenModel>, IRefreshTokenRepository
     {

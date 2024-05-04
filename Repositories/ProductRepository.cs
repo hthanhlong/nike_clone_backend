@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Reformation.Models;
+using Nike_clone_Backend.Models;
 
-namespace Reformation.Repositories.ProductRepository
+namespace Nike_clone_Backend.Repositories.ProductRepository
 {
     public class ProductRepository
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Reformation.UnitOfWork;
+using Nike_clone_Backend.UnitOfWork;
 
-namespace Reformation.Services
+namespace Nike_clone_Backend.Services
 {
     public class GenericService
     {

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Reformation.Models;
+using Nike_clone_Backend.Models;
 
-namespace Reformation.Database
+namespace Nike_clone_Backend.Database
 {
     public class ApplicationDbContext : DbContext
     {

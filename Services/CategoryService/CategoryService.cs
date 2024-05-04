@@ -1,7 +1,7 @@
-using Reformation.Models;
-using Reformation.UnitOfWork;
+using Nike_clone_Backend.Models;
+using Nike_clone_Backend.UnitOfWork;
 
-namespace Reformation.Services.CategoryService
+namespace Nike_clone_Backend.Services.CategoryService
 {
     public class CategoryService : GenericService, ICategoryService
     {

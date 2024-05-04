@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Reformation.Controllers
+namespace Nike_clone_Backend.Controllers
 {
     [Authorize]
     [ApiController]

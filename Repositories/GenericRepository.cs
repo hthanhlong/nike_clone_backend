@@ -1,7 +1,7 @@
-using Reformation.Database;
+using Nike_clone_Backend.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Reformation.Repositories
+namespace Nike_clone_Backend.Repositories
 {
     public class GenericRepository<TEntity> where TEntity : class
     {

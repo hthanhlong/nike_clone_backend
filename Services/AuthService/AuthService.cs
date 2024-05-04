@@ -1,9 +1,9 @@
-using Reformation.Models;
-using Reformation.Utils;
-using Reformation.Classes;
-using Reformation.UnitOfWork;
+using Nike_clone_Backend.Models;
+using Nike_clone_Backend.Utils;
+using Nike_clone_Backend.Classes;
+using Nike_clone_Backend.UnitOfWork;
 
-namespace Reformation.Services.AuthService
+namespace Nike_clone_Backend.Services.AuthService
 {
     public class AuthService : GenericService, IAuthService
     {

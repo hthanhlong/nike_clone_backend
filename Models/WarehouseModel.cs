@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace Reformation.Models
+namespace Nike_clone_Backend.Models
 {
     public class WarehouseModel
     {

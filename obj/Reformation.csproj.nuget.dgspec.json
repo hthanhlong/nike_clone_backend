@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/meenadang/Private/Coding/Dot-net/Reformation/Reformation.csproj": {}
+    "/Users/meenadang/Private/Coding/Dot-net/nike_clone_backend/Reformation.csproj": {}
   },
   "projects": {
-    "/Users/meenadang/Private/Coding/Dot-net/Reformation/Reformation.csproj": {
+    "/Users/meenadang/Private/Coding/Dot-net/nike_clone_backend/Reformation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/meenadang/Private/Coding/Dot-net/Reformation/Reformation.csproj",
+        "projectUniqueName": "/Users/meenadang/Private/Coding/Dot-net/nike_clone_backend/Reformation.csproj",
         "projectName": "Reformation",
-        "projectPath": "/Users/meenadang/Private/Coding/Dot-net/Reformation/Reformation.csproj",
+        "projectPath": "/Users/meenadang/Private/Coding/Dot-net/nike_clone_backend/Reformation.csproj",
         "packagesPath": "/Users/meenadang/.nuget/packages/",
-        "outputPath": "/Users/meenadang/Private/Coding/Dot-net/Reformation/obj/",
+        "outputPath": "/Users/meenadang/Private/Coding/Dot-net/nike_clone_backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/meenadang/.nuget/NuGet/NuGet.Config"

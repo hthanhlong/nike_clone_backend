@@ -1,10 +1,10 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using Reformation.Classes;
-using Reformation.Core;
-using Reformation.Services.AuthService;
+using Nike_clone_Backend.Classes;
+using Nike_clone_Backend.Core;
+using Nike_clone_Backend.Services.AuthService;
 
-namespace Reformation.Controllers
+namespace Nike_clone_Backend.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]

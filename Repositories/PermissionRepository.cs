@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Reformation.Database;
-using Reformation.Models;
+using Nike_clone_Backend.Database;
+using Nike_clone_Backend.Models;
 
-namespace Reformation.Repositories.PermissionRepository
+namespace Nike_clone_Backend.Repositories.PermissionRepository
 {
     public class PermissionRepository : GenericRepository<PermissionModel>
     {

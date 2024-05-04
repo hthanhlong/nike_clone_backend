@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Reformation.Models;
+using Nike_clone_Backend.Models;
 
-namespace Reformation.Services.OrderService
+namespace Nike_clone_Backend.Services.OrderService
 {
     public class OrderService : IOrderService
     {

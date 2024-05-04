@@ -1,10 +1,10 @@
-using Reformation.Repositories;
-using Reformation.Repositories.CategoryRepository;
-using Reformation.Repositories.PermissionRepository;
-using Reformation.Repositories.RoleRepository;
-using Reformation.Repositories.UserRepository;
+using Nike_clone_Backend.Repositories;
+using Nike_clone_Backend.Repositories.CategoryRepository;
+using Nike_clone_Backend.Repositories.PermissionRepository;
+using Nike_clone_Backend.Repositories.RoleRepository;
+using Nike_clone_Backend.Repositories.UserRepository;
 
-namespace Reformation.UnitOfWork
+namespace Nike_clone_Backend.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
@@ -12,7 +12,7 @@ namespace Reformation.UnitOfWork
         public UserRepository UserRepository { get; }
         public RoleRepository RoleRepository { get; }
         public PermissionRepository PermissionRepository { get; }
-        public RefreshTokenRepository RefreshTokenRepository  { get; }
+        public RefreshTokenRepository RefreshTokenRepository { get; }
         public Task SaveAsync();
     }
 }

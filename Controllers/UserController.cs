@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Reformation.Core;
-using Reformation.Services.UserService;
+using Nike_clone_Backend.Core;
+using Nike_clone_Backend.Services.UserService;
 
-namespace Reformation.Controllers
+namespace Nike_clone_Backend.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]

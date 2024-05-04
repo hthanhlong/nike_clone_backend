@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4F7fTdI6hw0P5vNfn3A4SAngd03u0TFHcPySSJAFUotBe4PECPnh8LUSK5BHSouiIxgGl45MsmFvBvZIXaUV5A==",
+  "dgSpecHash": "wgvnKQrAJZz7HTH20fqDNVjwW7rTk5RQ80cJKiQNVksQhL4jIchgsYt/DQy+0izExeQ9WnuNVNx3YGU6wya3Qw==",
   "success": true,
-  "projectFilePath": "/Users/meenadang/Private/Coding/Dot-net/Reformation/Reformation.csproj",
+  "projectFilePath": "/Users/meenadang/Private/Coding/Dot-net/nike_clone_backend/Nike_clone_Backend.csproj",
   "expectedPackageFiles": [
     "/Users/meenadang/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/Users/meenadang/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

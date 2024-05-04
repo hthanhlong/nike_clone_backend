@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Reformation.Controllers
+namespace Nike_clone_Backend.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]

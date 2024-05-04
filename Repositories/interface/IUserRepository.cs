@@ -1,6 +1,6 @@
-using Reformation.Models;
+using Nike_clone_Backend.Models;
 
-namespace Reformation.Repositories.Interface
+namespace Nike_clone_Backend.Repositories.Interface
 {
     public interface IUserRepository
     {

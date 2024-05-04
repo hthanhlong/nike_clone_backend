@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Reformation.Models
+namespace Nike_clone_Backend.Models
 {
     public class OrderModel
     {
@@ -18,7 +18,7 @@ namespace Reformation.Models
         public required decimal Total { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        
+
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }
 }

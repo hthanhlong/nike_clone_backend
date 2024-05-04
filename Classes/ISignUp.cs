@@ -1,6 +1,6 @@
-using Reformation.Models;
+using Nike_clone_Backend.Models;
 
-namespace Reformation.Classes
+namespace Nike_clone_Backend.Classes
 {
     public class ISignUp
     {
@@ -9,7 +9,7 @@ namespace Reformation.Classes
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
         public required int RoleId { get; set; }
-        public required int PermissionId  { get; set; }
+        public required int PermissionId { get; set; }
     }
 }
 

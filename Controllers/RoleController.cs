@@ -1,10 +1,10 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Reformation.Models;
-using Reformation.Services.RoleService;
+using Nike_clone_Backend.Models;
+using Nike_clone_Backend.Services.RoleService;
 
-namespace Reformation.Controllers
+namespace Nike_clone_Backend.Controllers
 {
     [Authorize]
     [ApiController]

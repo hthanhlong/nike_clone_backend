@@ -5606,11 +5606,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/meenadang/Private/Coding/Dot-net/Reformation/Reformation.csproj",
-      "projectName": "Reformation",
-      "projectPath": "/Users/meenadang/Private/Coding/Dot-net/Reformation/Reformation.csproj",
+      "projectUniqueName": "/Users/meenadang/Private/Coding/Dot-net/nike_clone_backend/Nike_clone_Backend.csproj",
+      "projectName": "Nike_clone_Backend",
+      "projectPath": "/Users/meenadang/Private/Coding/Dot-net/nike_clone_backend/Nike_clone_Backend.csproj",
       "packagesPath": "/Users/meenadang/.nuget/packages/",
-      "outputPath": "/Users/meenadang/Private/Coding/Dot-net/Reformation/obj/",
+      "outputPath": "/Users/meenadang/Private/Coding/Dot-net/nike_clone_backend/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/meenadang/.nuget/NuGet/NuGet.Config"

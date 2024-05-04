@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Reformation.Migrations
+namespace Nike_clone_Backend.Migrations
 {
     /// <inheritdoc />
     public partial class createRefreshTokenModel : Migration

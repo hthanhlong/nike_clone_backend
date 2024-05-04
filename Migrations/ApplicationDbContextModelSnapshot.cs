@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Reformation.Database;
+using Nike_clone_Backend.Database;
 
 #nullable disable
 
-namespace Reformation.Migrations
+namespace Nike_clone_Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace Reformation.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Reformation.Models.CategoryModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.CategoryModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,7 +51,7 @@ namespace Reformation.Migrations
                     b.ToTable("CategoryModel");
                 });
 
-            modelBuilder.Entity("Reformation.Models.OrderModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.OrderModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -86,7 +86,7 @@ namespace Reformation.Migrations
                     b.ToTable("OrderModel");
                 });
 
-            modelBuilder.Entity("Reformation.Models.PermissionModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.PermissionModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,7 +109,7 @@ namespace Reformation.Migrations
                     b.ToTable("PermissionModel");
                 });
 
-            modelBuilder.Entity("Reformation.Models.ProductModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.ProductModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -159,7 +159,7 @@ namespace Reformation.Migrations
                     b.ToTable("ProductModel");
                 });
 
-            modelBuilder.Entity("Reformation.Models.RefreshTokenModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.RefreshTokenModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -187,7 +187,7 @@ namespace Reformation.Migrations
                     b.ToTable("RefreshTokenModel");
                 });
 
-            modelBuilder.Entity("Reformation.Models.RoleModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.RoleModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -205,7 +205,7 @@ namespace Reformation.Migrations
                     b.ToTable("RoleModel");
                 });
 
-            modelBuilder.Entity("Reformation.Models.TransactionModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.TransactionModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -237,7 +237,7 @@ namespace Reformation.Migrations
                     b.ToTable("TransactionModel");
                 });
 
-            modelBuilder.Entity("Reformation.Models.UserModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.UserModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -328,7 +328,7 @@ namespace Reformation.Migrations
                     b.ToTable("UserModel");
                 });
 
-            modelBuilder.Entity("Reformation.Models.WarehouseModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.WarehouseModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -363,15 +363,15 @@ namespace Reformation.Migrations
                     b.ToTable("WarehouseModel");
                 });
 
-            modelBuilder.Entity("Reformation.Models.OrderModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.OrderModel", b =>
                 {
-                    b.HasOne("Reformation.Models.ProductModel", "Product")
+                    b.HasOne("Nike_clone_Backend.Models.ProductModel", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Reformation.Models.UserModel", "User")
+                    b.HasOne("Nike_clone_Backend.Models.UserModel", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -382,9 +382,9 @@ namespace Reformation.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Reformation.Models.ProductModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.ProductModel", b =>
                 {
-                    b.HasOne("Reformation.Models.CategoryModel", "Category")
+                    b.HasOne("Nike_clone_Backend.Models.CategoryModel", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -393,9 +393,9 @@ namespace Reformation.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Reformation.Models.RefreshTokenModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.RefreshTokenModel", b =>
                 {
-                    b.HasOne("Reformation.Models.UserModel", "User")
+                    b.HasOne("Nike_clone_Backend.Models.UserModel", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -404,15 +404,15 @@ namespace Reformation.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Reformation.Models.TransactionModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.TransactionModel", b =>
                 {
-                    b.HasOne("Reformation.Models.ProductModel", "Product")
+                    b.HasOne("Nike_clone_Backend.Models.ProductModel", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Reformation.Models.UserModel", "User")
+                    b.HasOne("Nike_clone_Backend.Models.UserModel", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -423,15 +423,15 @@ namespace Reformation.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Reformation.Models.UserModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.UserModel", b =>
                 {
-                    b.HasOne("Reformation.Models.PermissionModel", "Permission")
+                    b.HasOne("Nike_clone_Backend.Models.PermissionModel", "Permission")
                         .WithMany()
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Reformation.Models.RoleModel", "Role")
+                    b.HasOne("Nike_clone_Backend.Models.RoleModel", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -442,9 +442,9 @@ namespace Reformation.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Reformation.Models.WarehouseModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.WarehouseModel", b =>
                 {
-                    b.HasOne("Reformation.Models.ProductModel", "Product")
+                    b.HasOne("Nike_clone_Backend.Models.ProductModel", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)

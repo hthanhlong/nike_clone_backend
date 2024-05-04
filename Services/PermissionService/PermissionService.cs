@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Reformation.Models;
-using Reformation.Services.RoleService;
-using Reformation.UnitOfWork;
+using Nike_clone_Backend.Models;
+using Nike_clone_Backend.Services.RoleService;
+using Nike_clone_Backend.UnitOfWork;
 
-namespace Reformation.Services.PermissionService
+namespace Nike_clone_Backend.Services.PermissionService
 {
     public class PermissionService : GenericService, IPermissionService
     {

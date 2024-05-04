@@ -1,7 +1,7 @@
-using Reformation.Classes;
-using Reformation.Models;
+using Nike_clone_Backend.Classes;
+using Nike_clone_Backend.Models;
 
-namespace Reformation.Services.AuthService
+namespace Nike_clone_Backend.Services.AuthService
 {
     public interface IAuthService
     {

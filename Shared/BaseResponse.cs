@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Reformation.Core
+namespace Nike_clone_Backend.Core
 {
     public class NotFoundResponse : NotFoundObjectResult
     {

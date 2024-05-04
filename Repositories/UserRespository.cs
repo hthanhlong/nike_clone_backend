@@ -1,9 +1,9 @@
-using Reformation.Database;
-using Reformation.Models;
+using Nike_clone_Backend.Database;
+using Nike_clone_Backend.Models;
 using Microsoft.EntityFrameworkCore;
-using Reformation.Repositories.Interface;
+using Nike_clone_Backend.Repositories.Interface;
 
-namespace Reformation.Repositories.UserRepository
+namespace Nike_clone_Backend.Repositories.UserRepository
 {
     public class UserRepository(ApplicationDbContext context) : GenericRepository<UserModel>(context), IUserRepository
     {

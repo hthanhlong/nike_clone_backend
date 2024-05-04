@@ -1,8 +1,8 @@
 
-using Reformation.Classes;
-using Reformation.Models;
+using Nike_clone_Backend.Classes;
+using Nike_clone_Backend.Models;
 
-namespace Reformation.Services.UserService
+namespace Nike_clone_Backend.Services.UserService
 {
     public interface IUserService
     {
