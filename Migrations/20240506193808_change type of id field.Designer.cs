@@ -12,8 +12,8 @@ using Nike_clone_Backend.Database;
 namespace Nike_clone_Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240430171853_add salt in usermodel")]
-    partial class addsaltinusermodel
+    [Migration("20240506193808_change type of id field")]
+    partial class changetypeofidfield
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,9 @@ namespace Nike_clone_Backend.Migrations
 
             modelBuilder.Entity("Nike_clone_Backend.Models.CategoryModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -56,20 +54,25 @@ namespace Nike_clone_Backend.Migrations
 
             modelBuilder.Entity("Nike_clone_Backend.Models.OrderModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductId")
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ProductVersion")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(6, 2)");
@@ -77,25 +80,23 @@ namespace Nike_clone_Backend.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
-
                     b.HasIndex("UserId");
+
+                    b.HasIndex("ProductId", "ProductVersion");
 
                     b.ToTable("OrderModel");
                 });
 
             modelBuilder.Entity("Nike_clone_Backend.Models.PermissionModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Action")
                         .IsRequired()
@@ -114,14 +115,16 @@ namespace Nike_clone_Backend.Migrations
 
             modelBuilder.Entity("Nike_clone_Backend.Models.ProductModel", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnOrder(0);
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<int>("Version")
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -152,23 +155,44 @@ namespace Nike_clone_Backend.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Version")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("Id", "Version");
 
                     b.HasIndex("CategoryId");
 
                     b.ToTable("ProductModel");
                 });
 
+            modelBuilder.Entity("Nike_clone_Backend.Models.RefreshTokenModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokenModel");
+                });
+
             modelBuilder.Entity("Nike_clone_Backend.Models.RoleModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -182,16 +206,17 @@ namespace Nike_clone_Backend.Migrations
 
             modelBuilder.Entity("Nike_clone_Backend.Models.TransactionModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductId")
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ProductVersion")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -200,25 +225,23 @@ namespace Nike_clone_Backend.Migrations
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(6, 2)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
-
                     b.HasIndex("UserId");
+
+                    b.HasIndex("ProductId", "ProductVersion");
 
                     b.ToTable("TransactionModel");
                 });
 
             modelBuilder.Entity("Nike_clone_Backend.Models.UserModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("BillingAddress")
                         .HasMaxLength(160)
@@ -262,15 +285,15 @@ namespace Nike_clone_Backend.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
-                    b.Property<int>("PermissionId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("PermissionId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Phone")
                         .HasMaxLength(160)
                         .HasColumnType("nvarchar(160)");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Salt")
                         .IsRequired()
@@ -305,11 +328,9 @@ namespace Nike_clone_Backend.Migrations
 
             modelBuilder.Entity("Nike_clone_Backend.Models.WarehouseModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Color")
                         .IsRequired()
@@ -319,7 +340,10 @@ namespace Nike_clone_Backend.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductId")
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ProductVersion")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -333,22 +357,22 @@ namespace Nike_clone_Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId", "ProductVersion");
 
                     b.ToTable("WarehouseModel");
                 });
 
             modelBuilder.Entity("Nike_clone_Backend.Models.OrderModel", b =>
                 {
-                    b.HasOne("Nike_clone_Backend.Models.ProductModel", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Nike_clone_Backend.Models.UserModel", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Nike_clone_Backend.Models.ProductModel", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId", "ProductVersion")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -368,17 +392,28 @@ namespace Nike_clone_Backend.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Nike_clone_Backend.Models.TransactionModel", b =>
+            modelBuilder.Entity("Nike_clone_Backend.Models.RefreshTokenModel", b =>
                 {
-                    b.HasOne("Nike_clone_Backend.Models.ProductModel", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Nike_clone_Backend.Models.UserModel", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Nike_clone_Backend.Models.TransactionModel", b =>
+                {
+                    b.HasOne("Nike_clone_Backend.Models.UserModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Nike_clone_Backend.Models.ProductModel", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId", "ProductVersion")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -410,7 +445,7 @@ namespace Nike_clone_Backend.Migrations
                 {
                     b.HasOne("Nike_clone_Backend.Models.ProductModel", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ProductId", "ProductVersion")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

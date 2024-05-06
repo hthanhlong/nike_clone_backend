@@ -35,8 +35,8 @@ namespace Nike_clone_Backend.Services.AuthService
                 LastName = signUp.LastName,
                 Password = hashPass,
                 Salt = salt,
-                Role = Role,
-                Permission = Permission
+                RoleId = Role.Id,
+                PermissionId = Permission.Id
             };
             await _unitOfWork.UserRepository.Insert(User);
             await _unitOfWork.SaveAsync();

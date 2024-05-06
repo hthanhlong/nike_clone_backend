@@ -23,6 +23,9 @@ namespace Nike_clone_Backend.Database
             modelBuilder.Entity<UserModel>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
+
+            modelBuilder.Entity<ProductModel>()
+                .HasKey(p => new { p.Id, p.Version });
         }
     }
 }

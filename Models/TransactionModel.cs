@@ -9,7 +9,7 @@ namespace Nike_clone_Backend.Models
 {
     public class TransactionModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public required UserModel User { get; set; }
         public required ProductModel Product { get; set; }
         [Range(1, 100)]

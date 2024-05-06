@@ -8,7 +8,7 @@ namespace Nike_clone_Backend.Models
 {
     public class PermissionModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [MaxLength(10)]
         public required string Action { get; set; } // create, read, update, delete
         [MaxLength(100)]

@@ -6,7 +6,7 @@ namespace Nike_clone_Backend.Models
 {
     public class UserModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [MaxLength(120)]
         public required string FirstName { get; set; }
         [MaxLength(120)]
@@ -16,8 +16,8 @@ namespace Nike_clone_Backend.Models
         [MaxLength(120)]
         public required string Password { get; set; }
         public required string Salt { get; set; } = "";
-        public required RoleModel Role { get; set; }
-        public required PermissionModel Permission { get; set; }
+        public required Guid RoleId { get; set; }
+        public required Guid PermissionId { get; set; }
         public string? Image { get; set; }
         public bool IsActive { get; set; } = true;
         [MaxLength(120)]
@@ -34,9 +34,11 @@ namespace Nike_clone_Backend.Models
         public string? ZipCode { get; set; }
         [MaxLength(160)]
         public string? Phone { get; set; }
-        [MaxLength(160)]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        // Navigation properties
+        public RoleModel? Role { get; set; }
+        public PermissionModel? Permission { get; set; }
     }
 }
 

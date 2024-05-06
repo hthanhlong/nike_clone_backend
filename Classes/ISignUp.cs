@@ -8,8 +8,8 @@ namespace Nike_clone_Backend.Classes
         public required string Password { get; set; }
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
-        public required int RoleId { get; set; }
-        public required int PermissionId { get; set; }
+        public required Guid RoleId { get; set; }
+        public required Guid PermissionId { get; set; }
     }
 }
 
