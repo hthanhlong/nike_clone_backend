@@ -1,5 +1,6 @@
 using FluentValidation;
 using System.Text;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -10,10 +11,9 @@ using Nike_clone_Backend.UnitOfWork;
 using Nike_clone_Backend.Validators;
 using Nike_clone_Backend.Services.RoleService;
 using Nike_clone_Backend.Services.PermissionService;
-using Nike_clone_Backend.Models;
 using Nike_clone_Backend.Utils;
-using Nike_clone_Backend;
 using Nike_clone_Backend.Models.DTOs;
+using Nike_clone_Backend.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +23,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddCors(ConfigurationCors.CallBackMy);
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -53,10 +56,10 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseExceptionHandler();
 app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
 app.MapControllers();

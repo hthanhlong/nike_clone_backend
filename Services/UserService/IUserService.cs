@@ -1,6 +1,7 @@
 
-using Nike_clone_Backend.Classes;
+
 using Nike_clone_Backend.Models;
+using Nike_clone_Backend.Models.DTOs;
 
 namespace Nike_clone_Backend.Services.UserService
 {
@@ -8,7 +9,7 @@ namespace Nike_clone_Backend.Services.UserService
     {
         Task<UserModel?> GetUser(int id);
         Task<List<UserModel>> GetUsers();
-        Task AddUser(ISignUp user);
+        Task AddUser(SignUpDto user);
         // Task DeleteUser(int id);
         // Task UpdateUser(UserModel user);
     }

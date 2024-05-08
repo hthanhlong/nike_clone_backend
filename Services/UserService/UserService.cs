@@ -1,5 +1,6 @@
-using Nike_clone_Backend.Classes;
+
 using Nike_clone_Backend.Models;
+using Nike_clone_Backend.Models.DTOs;
 using Nike_clone_Backend.UnitOfWork;
 namespace Nike_clone_Backend.Services.UserService
 {
@@ -9,7 +10,7 @@ namespace Nike_clone_Backend.Services.UserService
         {
         }
 
-        public Task AddUser(ISignUp user)
+        public Task AddUser(SignUpDto user)
         {
             throw new NotImplementedException();
         }

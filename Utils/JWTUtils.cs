@@ -2,8 +2,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Nike_clone_Backend.Classes;
 using Nike_clone_Backend.Models;
+using Nike_clone_Backend.Models.DTOs;
 using Nike_clone_Backend.UnitOfWork;
 
 namespace Nike_clone_Backend.Utils
@@ -27,7 +27,7 @@ namespace Nike_clone_Backend.Utils
                 [
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.Role, user.Role.Name)
+                    new Claim(ClaimTypes.Role, user.Role?.Name ?? "") // Added null check for user.Role.Name
                 ]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -57,7 +57,7 @@ namespace Nike_clone_Backend.Utils
             var token = _jwtSecurityTokenHandler.CreateToken(tokenDescriptor);
             return _jwtSecurityTokenHandler.WriteToken(token);
         }
-        public string ValidateRefreshToken(IRefreshToken refreshToken)
+        public string ValidateRefreshToken(RefreshTokenDto refreshToken)
         {
             try
             {

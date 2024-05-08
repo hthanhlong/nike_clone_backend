@@ -1,11 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "UxXGC8GBQJBEioN92BiCUtCUIjO4w+NlCZDj0/Ez+ORbh9EfPQtN92SucHIp1eXGlIOr8UiIWvz5QV4OO3aJfg==",
+  "dgSpecHash": "BQMaCkx4S91O8dQPIud1sdDylbBTQ0hHQOkgw8qnKy3nykWcgwiF/fIYHrRx/C7eJw7KfgUz4lA/SNBOQo0ZJw==",
   "success": true,
   "projectFilePath": "/Users/meenadang/Private/Coding/Dot-net/nike_clone_backend/Nike_clone_Backend.csproj",
   "expectedPackageFiles": [
     "/Users/meenadang/.nuget/packages/automapper/13.0.1/automapper.13.0.1.nupkg.sha512",
-    "/Users/meenadang/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "/Users/meenadang/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
     "/Users/meenadang/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",
     "/Users/meenadang/.nuget/packages/fluentvalidation/11.9.1/fluentvalidation.11.9.1.nupkg.sha512",
@@ -120,16 +119,5 @@
     "/Users/meenadang/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "/Users/meenadang/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1608",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Detected package version outside of dependency constraint: AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1 requires AutoMapper (= 12.0.1) but version AutoMapper 13.0.1 was resolved.",
-      "libraryId": "AutoMapper",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  "logs": []
 }
