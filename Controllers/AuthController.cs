@@ -1,7 +1,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Nike_clone_Backend.Classes;
-using Nike_clone_Backend.Core;
+using Nike_clone_Backend.Shared;
 using Nike_clone_Backend.Services.AuthService;
 
 namespace Nike_clone_Backend.Controllers;

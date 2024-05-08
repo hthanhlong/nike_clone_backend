@@ -1,5 +1,4 @@
 using Nike_clone_Backend.Database;
-using Nike_clone_Backend.Models;
 using Nike_clone_Backend.Repositories;
 using Nike_clone_Backend.Repositories.CategoryRepository;
 using Nike_clone_Backend.Repositories.PermissionRepository;

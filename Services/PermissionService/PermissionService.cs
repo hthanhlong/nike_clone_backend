@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Nike_clone_Backend.Models;
 using Nike_clone_Backend.Services.RoleService;
 using Nike_clone_Backend.UnitOfWork;

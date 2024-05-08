@@ -1,6 +1,5 @@
 using FluentValidation;
 using Nike_clone_Backend.Classes;
-using Nike_clone_Backend.Models;
 
 namespace Nike_clone_Backend.Validators
 {
