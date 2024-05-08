@@ -37,6 +37,7 @@ public class AuthController : ControllerBase
             return new BadRequestResponse(ex.Message);
         }
     }
+
     [HttpPost("sign-in")]
     public async Task<ActionResult> SignIn([FromBody] ISignIn signIn)
     {

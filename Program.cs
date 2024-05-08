@@ -8,19 +8,20 @@ using Nike_clone_Backend.Services.AuthService;
 using Nike_clone_Backend.Services.UserService;
 using Nike_clone_Backend.UnitOfWork;
 using Nike_clone_Backend.Validators;
-using Nike_clone_Backend.Classes;
 using Nike_clone_Backend.Services.RoleService;
 using Nike_clone_Backend.Services.PermissionService;
 using Nike_clone_Backend.Models;
 using Nike_clone_Backend.Utils;
+using Nike_clone_Backend;
+using Nike_clone_Backend.Models.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(ConfigurationCors.CallBackMy);
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -28,11 +29,12 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
-builder.Services.AddScoped<IValidator<ISignUp>, SignUpValidator>();
-builder.Services.AddScoped<IValidator<ISignIn>, SignInValidator>();
-builder.Services.AddScoped<IValidator<RoleModel>, RoleModelValidator>();
-builder.Services.AddScoped<IValidator<PermissionModel>, PermissionModelValidator>();
-builder.Services.AddScoped<IValidator<IRefreshToken>, RefreshTokenValidator>();
+builder.Services.AddScoped<IValidator<SignUpDto>, SignUpDtoValidator>();
+builder.Services.AddScoped<IValidator<SignInDto>, SignInDtoValidator>();
+builder.Services.AddScoped<IValidator<CreateRoleDto>, RoleModelValidator>();
+builder.Services.AddScoped<IValidator<CreatePermissionDto>, PermissionModelValidator>();
+builder.Services.AddScoped<IValidator<RefreshTokenDto>, RefreshTokenDtoValidator>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -45,10 +47,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:ACCESS_KEY"] ?? "123456"))
         };
     });
-
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
-
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

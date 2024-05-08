@@ -46,6 +46,8 @@ namespace Nike_clone_Backend.Services.AuthService
             var salt = user.Salt;
             var isPasswordCorrect = _passwordHarsher.VerifyPassword(hashedPassword, signInDto.Password, salt);
             if (!isPasswordCorrect) throw new Exception("Invalid password");
+            
+            
 
             var accessToken = _jwtUtils.GenerateAccessToken(user);
             var refreshToken = _jwtUtils.GenerateRefreshToken(user.Id.ToString(), user.Email);
