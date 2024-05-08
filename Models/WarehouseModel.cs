@@ -8,7 +8,7 @@ namespace Nike_clone_Backend.Models
 {
     public class WarehouseModel
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public required ProductModel Product { get; set; }
         public required int Quantity { get; set; }
         [Range(1, 20)]

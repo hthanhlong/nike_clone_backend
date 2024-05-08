@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Nike_clone_Backend.Core;
 using Nike_clone_Backend.Services.UserService;
 
 namespace Nike_clone_Backend.Controllers

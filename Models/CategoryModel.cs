@@ -1,17 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace Nike_clone_Backend.Models
+namespace Nike_clone_Backend.Models;
+
+public class CategoryModel
 {
-    public class CategoryModel
-    {
-        public Guid Id { get; set; }
-        public required string Name { get; set; }
-        public required string Description { get; set; }
-        public required string Image { get; set; }
-        public required string Slug { get; set; }
-    }
+    public Guid Id { get; set; } = Guid.NewGuid();
+    [MaxLength(50)]
+    public required string Name { get; set; }
+    [MaxLength(255)]
+    public required string Description { get; set; }
+    [MaxLength(255)]
+    public required string Image { get; set; }
+    [MaxLength(255)]
+    public required string Slug { get; set; }
 }
+
 

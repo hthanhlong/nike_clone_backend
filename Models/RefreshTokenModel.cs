@@ -9,7 +9,7 @@ namespace Nike_clone_Backend.Models
 {
     public class RefreshTokenModel
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public required UserModel User { get; set; }
         public required string RefreshToken { get; set; }
         public DateTime Expires { get; set; }

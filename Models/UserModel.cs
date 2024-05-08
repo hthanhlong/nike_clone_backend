@@ -6,7 +6,7 @@ namespace Nike_clone_Backend.Models
 {
     public class UserModel
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         [MaxLength(120)]
         public required string FirstName { get; set; }
         [MaxLength(120)]

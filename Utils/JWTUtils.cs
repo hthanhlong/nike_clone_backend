@@ -8,27 +8,22 @@ using Nike_clone_Backend.UnitOfWork;
 
 namespace Nike_clone_Backend.Utils
 {
-    public class JWTUtils
+    public class JwtUtils(IConfiguration configuration)
     {
-        private readonly IConfiguration _configuration;
-        private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
-        public JWTUtils(IConfiguration configuration)
-        {
-            _configuration = configuration;
-            _jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
-        }
+        private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler = new();
+
         public string GenerateAccessToken(UserModel user)
         {
-            var jwtKey = _configuration["Jwt:ACCESS_KEY"];
+            var jwtKey = configuration["Jwt:ACCESS_KEY"];
             if (jwtKey == null)
             {
                 throw new Exception("Jwt key not found");
             }
             var keyBytes = Encoding.ASCII.GetBytes(jwtKey);
             var signingKey = new SymmetricSecurityKey(keyBytes);
-            var Expires = DateTime.UtcNow.AddHours(_configuration.GetValue<int>("Jwt:ACCESS_TOKEN_EXPIRE"));
+            var expires = DateTime.UtcNow.AddHours(configuration.GetValue<int>("Jwt:ACCESS_TOKEN_EXPIRE"));
             var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
-            var Subs = new ClaimsIdentity(
+            var subs = new ClaimsIdentity(
                 [
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimTypes.Email, user.Email),
@@ -36,26 +31,26 @@ namespace Nike_clone_Backend.Utils
                 ]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = Subs,
-                Expires = Expires,
+                Subject = subs,
+                Expires = expires,
                 SigningCredentials = credentials
             };
             return _jwtSecurityTokenHandler.WriteToken(_jwtSecurityTokenHandler.CreateToken(tokenDescriptor));
         }
-        public string GenerateRefreshToken(string Id, string Email)
+        public string GenerateRefreshToken(string id, string email)
         {
-            var jwtKey = _configuration["Jwt:REFRESH_KEY"] ?? throw new Exception("Jwt key not found");
-            var jwtExpire = _configuration["Jwt:REFRESH_TOKEN_EXPIRE"];
+            var jwtKey = configuration["Jwt:REFRESH_KEY"] ?? throw new Exception("Jwt key not found");
+            var jwtExpire = configuration["Jwt:REFRESH_TOKEN_EXPIRE"];
             var keyBytes = Encoding.ASCII.GetBytes(jwtKey);
             var signingKey = new SymmetricSecurityKey(keyBytes);
-            var Subs = new ClaimsIdentity(
+            var subs = new ClaimsIdentity(
                 [
-                    new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
-                    new Claim(ClaimTypes.Email, Email),
+                    new Claim(ClaimTypes.NameIdentifier, id.ToString()),
+                    new Claim(ClaimTypes.Email, email),
                 ]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = Subs,
+                Subject = subs,
                 Expires = DateTime.UtcNow.AddDays(Convert.ToInt32(jwtExpire)),
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256Signature)
             };
@@ -66,7 +61,7 @@ namespace Nike_clone_Backend.Utils
         {
             try
             {
-                var jwtKey = _configuration["Jwt:REFRESH_KEY"] ?? throw new Exception("Jwt key not found");
+                var jwtKey = configuration["Jwt:REFRESH_KEY"] ?? throw new Exception("Jwt key not found");
                 var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtKey));
                 var tokenValidationParameters = new TokenValidationParameters
                 {
@@ -76,8 +71,7 @@ namespace Nike_clone_Backend.Utils
                     ValidateAudience = false,
                     ValidateLifetime = false
                 };
-                SecurityToken securityToken;
-                var principal = _jwtSecurityTokenHandler.ValidateToken(refreshToken.RefreshToken, tokenValidationParameters, out securityToken);
+                var principal = _jwtSecurityTokenHandler.ValidateToken(refreshToken.RefreshToken, tokenValidationParameters, out var securityToken);
                 var jwtSecurityToken = securityToken as JwtSecurityToken;
                 if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
                 {
@@ -86,7 +80,7 @@ namespace Nike_clone_Backend.Utils
                 var claim = principal.FindFirst(ClaimTypes.Email) ?? throw new Exception("Invalid token");
                 return claim.Value;
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 throw new Exception("Invalid token");
             }

@@ -1,8 +1,6 @@
-namespace Nike_clone_Backend.Classes
+namespace Nike_clone_Backend.Classes;
+public interface IRefreshToken
 {
-    public class IRefreshToken
-    {
-        public required string RefreshToken { get; set; }
-    }
+    public string RefreshToken { get; set; }
 }
 

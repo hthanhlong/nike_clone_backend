@@ -7,14 +7,12 @@ namespace Nike_clone_Backend.Services.AuthService
 {
     public class AuthService : GenericService, IAuthService
     {
-        private readonly IConfiguration _configuration;
         private readonly PasswordHarsherUtils _passwordHarsher = new PasswordHarsherUtils();
-        private readonly JWTUtils _jwtUtils;
+        private readonly JwtUtils _jwtUtils;
 
         public AuthService(IUnitOfWork unitOfWork, IConfiguration configuration) : base(unitOfWork)
         {
-            _configuration = configuration;
-            _jwtUtils = new JWTUtils(_configuration);
+            _jwtUtils = new JwtUtils(configuration);
         }
         public async Task SignUp(ISignUp signUp)
         {
@@ -25,20 +23,20 @@ namespace Nike_clone_Backend.Services.AuthService
             }
             var (hashPass, salt) = _passwordHarsher.HashPassword(signUp.Password);
 
-            RoleModel? Role = await _unitOfWork.RoleRepository.GetByIDAsync(signUp.RoleId) ?? throw new Exception("Role not found");
-            PermissionModel? Permission = await _unitOfWork.PermissionRepository.GetByIDAsync(signUp.PermissionId) ?? throw new Exception("Permission not found");
+            RoleModel role = await _unitOfWork.RoleRepository.GetByIDAsync(signUp.RoleId) ?? throw new Exception("Role not found");
+            PermissionModel permission = await _unitOfWork.PermissionRepository.GetByIDAsync(signUp.PermissionId) ?? throw new Exception("Permission not found");
 
-            var User = new UserModel
+            var user = new UserModel
             {
                 Email = signUp.Email,
                 FirstName = signUp.FirstName,
                 LastName = signUp.LastName,
                 Password = hashPass,
                 Salt = salt,
-                RoleId = Role.Id,
-                PermissionId = Permission.Id
+                RoleId = role.Id,
+                PermissionId = permission.Id
             };
-            await _unitOfWork.UserRepository.Insert(User);
+            await _unitOfWork.UserRepository.Insert(user);
             await _unitOfWork.SaveAsync();
         }
         public async Task<object> SignIn(ISignIn signInDto)
@@ -49,26 +47,26 @@ namespace Nike_clone_Backend.Services.AuthService
             var isPasswordCorrect = _passwordHarsher.VerifyPassword(hashedPassword, signInDto.Password, salt);
             if (!isPasswordCorrect) throw new Exception("Invalid password");
 
-            var AccessToken = _jwtUtils.GenerateAccessToken(user);
-            var RefreshToken = _jwtUtils.GenerateRefreshToken(user.Id.ToString(), user.Email);
+            var accessToken = _jwtUtils.GenerateAccessToken(user);
+            var refreshToken = _jwtUtils.GenerateRefreshToken(user.Id.ToString(), user.Email);
 
-            RefreshTokenModel refreshToken = new()
+            RefreshTokenModel refreshTokenModel = new()
             {
                 User = user,
-                RefreshToken = RefreshToken,
+                RefreshToken = refreshToken,
                 Expires = DateTime.Now.AddDays(30),
                 IsRevoked = false
             };
 
-            await _unitOfWork.RefreshTokenRepository.Insert(refreshToken);
+            await _unitOfWork.RefreshTokenRepository.Insert(refreshTokenModel);
             await _unitOfWork.SaveAsync();
 
             return new
             {
                 UserId = user.Id,
                 user.Email,
-                AccessToken,
-                RefreshToken
+                accessToken,
+                refreshToken
             };
         }
 
@@ -83,9 +81,9 @@ namespace Nike_clone_Backend.Services.AuthService
                 if (value == null) throw new Exception("Token validation failed");
                 Console.WriteLine(value);
                 var user = await _unitOfWork.UserRepository.GetUserByEmail(value) ?? throw new Exception("User not found");
-                var AccessToken = _jwtUtils.GenerateAccessToken(user);
-                Console.WriteLine(AccessToken);
-                return AccessToken;
+                var accessToken = _jwtUtils.GenerateAccessToken(user);
+                Console.WriteLine(accessToken);
+                return accessToken;
             }
             catch (Exception ex)
             {
@@ -101,6 +99,7 @@ namespace Nike_clone_Backend.Services.AuthService
             await _unitOfWork.SaveAsync();
         }
     }
+
 }
 
 

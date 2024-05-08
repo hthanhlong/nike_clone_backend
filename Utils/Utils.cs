@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using System.Security.Cryptography;
 
 namespace Nike_clone_Backend.Utils
@@ -41,21 +40,6 @@ namespace Nike_clone_Backend.Utils
                 Array.Copy(salt, 0, hashWithSaltBytes, 20, SaltSize);
                 return Convert.ToBase64String(hashWithSaltBytes);
             }
-        }
-    }
-
-
-    public class ConfigurationCORS()
-    {
-        public static void CallBackMy(CorsOptions options)
-        {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
-            options.AddPolicy("AllowAllOrigins",
-                builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
         }
     }
 }
