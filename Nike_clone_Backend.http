@@ -1,0 +1,46 @@
+@host = http://localhost:5149/api/v1
+
+### sign  up fail
+POST {{host}}/Auth/sign-up HTTP/1.1
+content-type: application/json
+
+{
+    "firstName": "sample",
+    "lastName": "sample",
+    "email": "sample",
+    "password": "sample",
+    "roleId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "permissionId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+}
+
+### sign up success
+POST {{host}}/Auth/sign-up HTTP/1.1
+content-type: application/json
+
+{
+    "firstName": "sample",
+    "lastName": "sample",
+    "email": "sample",
+    "password": "sample",
+    "roleId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "permissionId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+}
+
+### login fail
+POST  {{host}}/Auth/sign-in HTTP/1.1
+content-type: application/json
+
+{
+    "email": "sample@gmail.com",
+    "password": "sample"
+}
+
+### login success
+POST  {{host}}/Auth/sign-in HTTP/1.1
+content-type: application/json
+
+{
+    "email": "sample@gmail.com",
+    "password": "sample"
+}
+
