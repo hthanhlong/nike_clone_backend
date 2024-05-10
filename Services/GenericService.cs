@@ -1,3 +1,4 @@
+using AutoMapper;
 using Nike_clone_Backend.UnitOfWork;
 
 namespace Nike_clone_Backend.Services

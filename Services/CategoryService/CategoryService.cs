@@ -1,42 +1,56 @@
+using AutoMapper;
 using Nike_clone_Backend.Models;
+using Nike_clone_Backend.Models.DTOs;
 using Nike_clone_Backend.UnitOfWork;
 
 namespace Nike_clone_Backend.Services.CategoryService
 {
     public class CategoryService : GenericService, ICategoryService
     {
-        public CategoryService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        private readonly IMapper _mapper;
+        private readonly ILogger<CategoryService> _logger;
+        public CategoryService(IUnitOfWork unitOfWork, IMapper mapper, ILogger<CategoryService> logger) : base(unitOfWork)
         {
+            _mapper = mapper;
+            _logger = logger;
         }
 
-        async Task<CategoryModel?> ICategoryService.GetCategory(int id)
+        public async Task<CategoryModel?> GetCategory(int id)
         {
-            return await _unitOfWork.CategoryRepository.GetByIDAsync(id);
+            var result = await _unitOfWork.CategoryRepository.GetByIDAsync(id);
+            return _mapper.Map<CategoryModel>(result);
         }
 
-        async Task<IEnumerable<CategoryModel>> ICategoryService.GetCategories()
+        public async Task<List<CategoryModel>> GetCategories()
         {
-            return await _unitOfWork.CategoryRepository.GetAllAsync();
+            var result = await _unitOfWork.CategoryRepository.GetAllAsync();
+            if (result == null || !result.Any())
+            {
+                _logger.LogError("No categories found");
+                return new List<CategoryModel>();
+            }
+            return _mapper.Map<List<CategoryModel>>(result);
         }
 
-        async Task<CategoryModel> ICategoryService.AddCategory(CategoryModel category)
+        public async Task<CreateCategoryDto> AddCategory(CreateCategoryDto createCategoryDto)
         {
-            await _unitOfWork.CategoryRepository.Insert(category);
+            var categoryModel = _mapper.Map<CategoryModel>(createCategoryDto);
+            await _unitOfWork.CategoryRepository.Insert(categoryModel);
             await _unitOfWork.SaveAsync();
-            return category;
+            return _mapper.Map<CreateCategoryDto>(categoryModel);
         }
 
-        async Task ICategoryService.DeleteCategory(int id)
+        public async Task DeleteCategory(int id)
         {
             await _unitOfWork.CategoryRepository.Delete(id);
             await _unitOfWork.SaveAsync();
         }
 
-        async Task<CategoryModel> ICategoryService.UpdateCategory(CategoryModel category)
+        public async Task<CategoryModel> UpdateCategory(CategoryModel category)
         {
             _unitOfWork.CategoryRepository.Update(category);
             await _unitOfWork.SaveAsync();
-            return category;
+            return _mapper.Map<CategoryModel>(category);
         }
     }
 }

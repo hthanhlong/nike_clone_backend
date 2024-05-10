@@ -1,12 +1,13 @@
 using Nike_clone_Backend.Models;
+using Nike_clone_Backend.Models.DTOs;
 
 namespace Nike_clone_Backend.Services.CategoryService
 {
     public interface ICategoryService
     {
         Task<CategoryModel?> GetCategory(int id);
-        Task<IEnumerable<CategoryModel>> GetCategories();
-        Task<CategoryModel> AddCategory(CategoryModel category);
+        Task<List<CategoryModel>> GetCategories();
+        Task<CreateCategoryDto> AddCategory(CreateCategoryDto category);
         Task<CategoryModel> UpdateCategory(CategoryModel category);
         Task DeleteCategory(int id);
     }

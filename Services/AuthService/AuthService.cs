@@ -1,8 +1,8 @@
 using Nike_clone_Backend.Models;
 using Nike_clone_Backend.Utils;
-
 using Nike_clone_Backend.UnitOfWork;
 using Nike_clone_Backend.Models.DTOs;
+using AutoMapper;
 
 namespace Nike_clone_Backend.Services.AuthService
 {
@@ -11,9 +11,12 @@ namespace Nike_clone_Backend.Services.AuthService
         private readonly PasswordHarsherUtils _passwordHarsher = new PasswordHarsherUtils();
         private readonly JwtUtils _jwtUtils;
 
-        public AuthService(IUnitOfWork unitOfWork, IConfiguration configuration) : base(unitOfWork)
+        private readonly IMapper _mapper;
+
+        public AuthService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration) : base(unitOfWork)
         {
             _jwtUtils = new JwtUtils(configuration);
+            _mapper = mapper;
         }
         public async Task SignUp(SignUpDto signUp)
         {
@@ -23,10 +26,16 @@ namespace Nike_clone_Backend.Services.AuthService
                 throw new Exception("User already exist");
             }
             var (hashPass, salt) = _passwordHarsher.HashPassword(signUp.Password);
-
-            RoleModel role = await _unitOfWork.RoleRepository.GetByIDAsync(signUp.RoleId) ?? throw new Exception("Role not found");
-            PermissionModel permission = await _unitOfWork.PermissionRepository.GetByIDAsync(signUp.PermissionId) ?? throw new Exception("Permission not found");
-
+            var roleId = signUp.RoleId;
+            if (await _unitOfWork.RoleRepository.GetByIDAsync(roleId) == null)
+            {
+                roleId = Guid.Parse("39EF37C0-264C-45E5-A0B6-7A529AA39157");
+            }
+            var permissionId = signUp.PermissionId;
+            if (await _unitOfWork.PermissionRepository.GetByIDAsync(permissionId) == null)
+            {
+                permissionId = Guid.Parse("346F128A-1A57-448F-9B7E-87CD84ED31EF");
+            }
             var user = new UserModel
             {
                 Email = signUp.Email,
@@ -34,8 +43,8 @@ namespace Nike_clone_Backend.Services.AuthService
                 LastName = signUp.LastName,
                 Password = hashPass,
                 Salt = salt,
-                RoleId = role.Id,
-                PermissionId = permission.Id
+                RoleId = roleId,
+                PermissionId = permissionId
             };
             await _unitOfWork.UserRepository.Insert(user);
             await _unitOfWork.SaveAsync();

@@ -1,28 +1,23 @@
-using FluentValidation;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Nike_clone_Backend.Models;
+using Nike_clone_Backend.Models.DTOs;
 using Nike_clone_Backend.Services.CategoryService;
 
 namespace Nike_clone_Backend.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class CategoryController : ControllerBase
     {
-        private IValidator<CategoryModel> _validator;
         private readonly ICategoryService _categoryService;
-        public CategoryController(ICategoryService categoryService, IValidator<CategoryModel> validator)
+        public CategoryController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
-            _validator = validator;
         }
 
         [HttpGet]
-        public IActionResult GetCategories()
+        public async Task<IActionResult> GetCategories()
         {
-            return Ok(_categoryService.GetCategories());
+            return Ok(await _categoryService.GetCategories());
         }
 
         [HttpGet("{id}")]
@@ -32,15 +27,9 @@ namespace Nike_clone_Backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCategory([FromBody] CategoryModel category)
+        public async Task<IActionResult> AddCategory([FromBody] CreateCategoryDto createCategoryDto)
         {
-            FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(category);
-            if (!result.IsValid)
-            {
-                return BadRequest(result.Errors);
-            }
-
-            return Ok(_categoryService.AddCategory(category));
+            return Ok(await _categoryService.AddCategory(createCategoryDto));
         }
     }
 }

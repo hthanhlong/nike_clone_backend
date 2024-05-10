@@ -1,3 +1,4 @@
+using AutoMapper;
 using Nike_clone_Backend.Models;
 using Nike_clone_Backend.UnitOfWork;
 
@@ -5,8 +6,10 @@ namespace Nike_clone_Backend.Services.RoleService
 {
     public class RoleService : GenericService, IRoleService
     {
-        public RoleService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        private readonly IMapper _mapper;
+        public RoleService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork)
         {
+            _mapper = mapper;
         }
 
         public async Task<RoleModel> AddRole(RoleModel role)

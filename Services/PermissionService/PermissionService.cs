@@ -1,3 +1,4 @@
+using AutoMapper;
 using Nike_clone_Backend.Models;
 using Nike_clone_Backend.Services.RoleService;
 using Nike_clone_Backend.UnitOfWork;
@@ -5,9 +6,11 @@ using Nike_clone_Backend.UnitOfWork;
 namespace Nike_clone_Backend.Services.PermissionService
 {
     public class PermissionService : GenericService, IPermissionService
-    {
-        public PermissionService(IUnitOfWork unitOfWork) : base(unitOfWork)
+    {   
+        private readonly IMapper _mapper;
+        public PermissionService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork)
         {
+            _mapper = mapper;
         }
         public async Task<PermissionModel> AddPermission(PermissionModel permission)
         {

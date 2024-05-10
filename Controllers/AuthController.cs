@@ -25,30 +25,16 @@ public class AuthController : ControllerBase
     [HttpPost("sign-in")]
     public async Task<ActionResult> SignIn([FromBody] SignInDto signInDto)
     {
-        try
-        {
-            var tokens = await _authService.SignIn(signInDto);
-            return new SuccessResponse(new { tokens }, "User signed In successfully");
-        }
-        catch (Exception ex)
-        {
-            return new BadRequestResponse(ex.Message);
-        }
+        var tokens = await _authService.SignIn(signInDto);
+        return new SuccessResponse(new { tokens }, "User signed In successfully");
     }
 
     [HttpPost("refresh-token")]
     public async Task<ActionResult> GetNewAccessToken([FromBody] RefreshTokenDto refreshTokenDto)
     {
-        try
-        {
-            var tokens = await _authService.GetNewAccessToken(refreshTokenDto);
-            Console.WriteLine(tokens);
-            return new SuccessResponse(new { AccessToken = tokens }, "New access token generated successfully");
-        }
-        catch (Exception ex)
-        {
-            return new BadRequestResponse(ex.Message);
-        }
+        var tokens = await _authService.GetNewAccessToken(refreshTokenDto);
+        Console.WriteLine(tokens);
+        return new SuccessResponse(new { AccessToken = tokens }, "New access token generated successfully");
     }
 }
 

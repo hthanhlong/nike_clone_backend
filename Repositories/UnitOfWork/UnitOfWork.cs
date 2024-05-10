@@ -16,7 +16,7 @@ namespace Nike_clone_Backend.UnitOfWork
         private RoleRepository roleRepository;
         private PermissionRepository permissionRepository;
         private RefreshTokenRepository refreshTokenRepository;
-        private readonly ApplicationDbContext _context = context;
+        private readonly ApplicationDbContext _context = context;   
 
         // CategoryRepository -----------------------
         public CategoryRepository CategoryRepository

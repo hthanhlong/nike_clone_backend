@@ -10,7 +10,7 @@ public class CategoryModel
     [MaxLength(255)]
     public required string Description { get; set; }
     [MaxLength(255)]
-    public required string Image { get; set; }
+    public string? Image { get; set; }
     [MaxLength(255)]
     public required string Slug { get; set; }
 }

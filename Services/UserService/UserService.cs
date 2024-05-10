@@ -1,4 +1,6 @@
 
+using AutoMapper;
+using nike_clone_backend.Models.DTOs;
 using Nike_clone_Backend.Models;
 using Nike_clone_Backend.Models.DTOs;
 using Nike_clone_Backend.UnitOfWork;
@@ -6,13 +8,16 @@ namespace Nike_clone_Backend.Services.UserService
 {
     public class UserService : GenericService, IUserService
     {
-        public UserService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        private readonly IMapper _mapper;
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork)
         {
+            _mapper = mapper;
         }
 
-        public Task AddUser(SignUpDto user)
+        public async Task DeleteUser(int id)
         {
-            throw new NotImplementedException();
+            await _unitOfWork.UserRepository.Delete(id);
+            await _unitOfWork.SaveAsync();
         }
 
         public Task<UserModel?> GetUser(int id)
@@ -20,9 +25,22 @@ namespace Nike_clone_Backend.Services.UserService
             throw new NotImplementedException();
         }
 
-        public Task<List<UserModel>> GetUsers()
+        public async Task<List<UserModel>> GetUsers()
         {
-            throw new NotImplementedException();
+            var users = await _unitOfWork.UserRepository.GetAllAsync();
+            return _mapper.Map<List<UserModel>>(users);
+        }
+
+        public async Task UpdateUser(int id, UpdateUserDto updateUserDto)
+        {
+            var user = await _unitOfWork.UserRepository.GetByIDAsync(id);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+            _mapper.Map(updateUserDto, user);
+            _unitOfWork.UserRepository.Update(user);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

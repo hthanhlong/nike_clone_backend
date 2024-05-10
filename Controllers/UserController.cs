@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using nike_clone_backend.Models.DTOs;
 using Nike_clone_Backend.Services.UserService;
 
 namespace Nike_clone_Backend.Controllers
@@ -17,30 +18,27 @@ namespace Nike_clone_Backend.Controllers
         [HttpGet]
         public async Task<ActionResult> GetUsers()
         {
-            throw new NotImplementedException();
+            return Ok(await _userService.GetUsers());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetUser(int id)
         {
-            throw new NotImplementedException();
+            return Ok(await _userService.GetUser(id));
         }
 
-        [HttpPost]
-        public IActionResult AddUser()
-        {
-            return Ok();
-        }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateUser(int id)
+        public async Task<IActionResult> UpdateUser(int id, UpdateUserDto updateUserDto)
         {
+            await _userService.UpdateUser(id, updateUserDto);
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
+            await _userService.DeleteUser(id);
             return Ok();
         }
     }
