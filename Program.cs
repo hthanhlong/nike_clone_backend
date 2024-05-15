@@ -1,3 +1,4 @@
+using Serilog;
 using FluentValidation;
 using System.Text;
 using FluentValidation.AspNetCore;
@@ -18,8 +19,17 @@ using Nike_clone_Backend.Services.CategoryService;
 using Nike_clone_Backend;
 using nike_clone_backend.Validators;
 using nike_clone_backend.Models.DTOs;
+using nike_clone_backend.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .Enrich.FromLogContext()
+    .WriteTo.Console()   
+    .WriteTo.File("logs/Nike_clone_Backend.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -66,10 +76,16 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
-app.UseExceptionHandler();
+else
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
+
 app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
 app.MapControllers();

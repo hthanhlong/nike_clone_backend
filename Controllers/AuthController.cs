@@ -10,14 +10,17 @@ namespace Nike_clone_Backend.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
-    public AuthController(IAuthService authService)
+    private readonly ILogger<AuthController> _logger;
+    public AuthController(IAuthService authService, ILogger<AuthController> logger)
     {
         _authService = authService;
+        _logger = logger;
     }
 
     [HttpPost("sign-up")]
     public async Task<ActionResult> SignUp([FromBody] SignUpDto signUpDto)
     {
+        _logger.LogDebug($"Signing up user {signUpDto}");
         await _authService.SignUp(signUpDto);
         return new SuccessResponse(null, "User signed up successfully");
     }

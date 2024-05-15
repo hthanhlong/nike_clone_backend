@@ -1,6 +1,7 @@
 
 using AutoMapper;
 using nike_clone_backend.Models.DTOs;
+using nike_clone_backend.Shared.ErrorsExceptions;
 using Nike_clone_Backend.Models;
 using Nike_clone_Backend.Models.DTOs;
 using Nike_clone_Backend.UnitOfWork;
@@ -36,7 +37,7 @@ namespace Nike_clone_Backend.Services.UserService
             var user = await _unitOfWork.UserRepository.GetByIDAsync(id);
             if (user == null)
             {
-                throw new Exception("User not found");
+                throw new CustomException("User not found", 404);
             }
             _mapper.Map(updateUserDto, user);
             _unitOfWork.UserRepository.Update(user);

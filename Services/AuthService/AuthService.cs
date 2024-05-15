@@ -3,6 +3,8 @@ using Nike_clone_Backend.Utils;
 using Nike_clone_Backend.UnitOfWork;
 using Nike_clone_Backend.Models.DTOs;
 using AutoMapper;
+using System.Reflection;
+using nike_clone_backend.Shared.ErrorsExceptions;
 
 namespace Nike_clone_Backend.Services.AuthService
 {
@@ -23,7 +25,7 @@ namespace Nike_clone_Backend.Services.AuthService
             var isUserExist = await _unitOfWork.UserRepository.GetUserByEmail(signUp.Email);
             if (isUserExist != null)
             {
-                throw new Exception("User already exist");
+                throw new CustomException("User already exist", 400);
             }
             var (hashPass, salt) = _passwordHarsher.HashPassword(signUp.Password);
             var roleId = signUp.RoleId;
@@ -51,11 +53,11 @@ namespace Nike_clone_Backend.Services.AuthService
         }
         public async Task<object> SignIn(SignInDto signInDto)
         {
-            var user = await _unitOfWork.UserRepository.GetUserByEmail(signInDto.Email) ?? throw new Exception("User not found");
+            var user = await _unitOfWork.UserRepository.GetUserByEmail(signInDto.Email) ?? throw new CustomException("User not found", 404);
             var hashedPassword = user.Password;
             var salt = user.Salt;
             var isPasswordCorrect = _passwordHarsher.VerifyPassword(hashedPassword, signInDto.Password, salt);
-            if (!isPasswordCorrect) throw new Exception("Invalid password");
+            if (!isPasswordCorrect) throw new CustomException("Invalid password", 400);
 
 
 
@@ -86,17 +88,17 @@ namespace Nike_clone_Backend.Services.AuthService
         {
             try
             {
-                RefreshTokenModel refreshTokenModel = await _unitOfWork.RefreshTokenRepository.GetByToken(refreshToken.RefreshToken) ?? throw new Exception("Refresh token not found");
-                if (refreshTokenModel.IsRevoked) throw new Exception("Refresh token revoked");
-                if (refreshTokenModel.Expires < DateTime.Now) throw new Exception("Refresh token expired");
+                RefreshTokenModel refreshTokenModel = await _unitOfWork.RefreshTokenRepository.GetByToken(refreshToken.RefreshToken) ?? throw new CustomException("Refresh token not found", 404);
+                if (refreshTokenModel.IsRevoked) throw new CustomException("Refresh token revoked", 400);
+                if (refreshTokenModel.Expires < DateTime.Now) throw new CustomException("Refresh token expired", 400);
                 var refreshTokenDto = new RefreshTokenDto
                 {
                     RefreshToken = refreshToken.RefreshToken
                 };
                 var value = _jwtUtils.ValidateRefreshToken(refreshTokenDto);
-                if (value == null) throw new Exception("Token validation failed");
+                if (value == null) throw new CustomException("Token validation failed", 400);
                 Console.WriteLine(value);
-                var user = await _unitOfWork.UserRepository.GetUserByEmail(value) ?? throw new Exception("User not found");
+                var user = await _unitOfWork.UserRepository.GetUserByEmail(value) ?? throw new CustomException("User not found", 404);
                 var accessToken = _jwtUtils.GenerateAccessToken(user);
                 Console.WriteLine(accessToken);
                 return accessToken;
@@ -110,7 +112,7 @@ namespace Nike_clone_Backend.Services.AuthService
 
         public async Task RevokeRefreshToken(RefreshTokenDto refreshToken)
         {
-            RefreshTokenModel refreshTokenModel = await _unitOfWork.RefreshTokenRepository.GetByToken(refreshToken.RefreshToken) ?? throw new Exception("Refresh token not found");
+            RefreshTokenModel refreshTokenModel = await _unitOfWork.RefreshTokenRepository.GetByToken(refreshToken.RefreshToken) ?? throw new CustomException("Refresh token not found", 404);
             refreshTokenModel.IsRevoked = true;
             await _unitOfWork.SaveAsync();
         }

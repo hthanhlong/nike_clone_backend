@@ -1,7 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.AccessControl;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using nike_clone_backend.Shared.ErrorsExceptions;
 using Nike_clone_Backend.Models;
 using Nike_clone_Backend.Models.DTOs;
 using Nike_clone_Backend.UnitOfWork;
@@ -17,7 +19,7 @@ namespace Nike_clone_Backend.Utils
             var jwtKey = configuration["Jwt:ACCESS_KEY"];
             if (jwtKey == null)
             {
-                throw new Exception("Jwt key not found");
+                throw new CustomException("Jwt key not found", 500);
             }
             var keyBytes = Encoding.ASCII.GetBytes(jwtKey);
             var signingKey = new SymmetricSecurityKey(keyBytes);
@@ -39,7 +41,7 @@ namespace Nike_clone_Backend.Utils
         }
         public string GenerateRefreshToken(string id, string email)
         {
-            var jwtKey = configuration["Jwt:REFRESH_KEY"] ?? throw new Exception("Jwt key not found");
+            var jwtKey = configuration["Jwt:REFRESH_KEY"] ?? throw new CustomException("Jwt key not found", 500);
             var jwtExpire = configuration["Jwt:REFRESH_TOKEN_EXPIRE"];
             var keyBytes = Encoding.ASCII.GetBytes(jwtKey);
             var signingKey = new SymmetricSecurityKey(keyBytes);
@@ -61,7 +63,7 @@ namespace Nike_clone_Backend.Utils
         {
             try
             {
-                var jwtKey = configuration["Jwt:REFRESH_KEY"] ?? throw new Exception("Jwt key not found");
+                var jwtKey = configuration["Jwt:REFRESH_KEY"] ?? throw new CustomException("Jwt key not found", 500);
                 var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtKey));
                 var tokenValidationParameters = new TokenValidationParameters
                 {
@@ -77,12 +79,12 @@ namespace Nike_clone_Backend.Utils
                 {
                     throw new SecurityTokenException("Invalid token");
                 }
-                var claim = principal.FindFirst(ClaimTypes.Email) ?? throw new Exception("Invalid token");
+                var claim = principal.FindFirst(ClaimTypes.Email) ?? throw new CustomException("Invalid token", 400);
                 return claim.Value;
             }
             catch (Exception)
             {
-                throw new Exception("Invalid token");
+                throw new CustomException("Invalid token", 400);
             }
         }
     }
