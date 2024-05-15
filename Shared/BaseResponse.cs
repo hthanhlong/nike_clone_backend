@@ -1,32 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using nike_clone_backend.Shared.CustomResult;
 
 namespace Nike_clone_Backend.Shared;
 
 public class SuccessResponse : OkObjectResult
 {
-    public SuccessResponse(object? data, string message) : base(null)
+    public SuccessResponse(string message, object? data) : base(null)
     {
-        Value = new
-        {
-            IsSuccess = true,
-            Message = message,
-            ErrorCode = 0,
-            Data = data
-        };
-    }
-}
-
-
-public class BadRequestResponse : BadRequestObjectResult
-{
-    public BadRequestResponse(string message) : base(new
-    {
-        IsSuccess = false,
-        Message = message,
-        ErrorCode = 4531,
-        Data = new { }
-    })
-    {
-
+        Value = new SuccessResult(message, data);
     }
 }

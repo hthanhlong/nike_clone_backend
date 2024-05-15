@@ -20,7 +20,7 @@ content-type: application/json
 {
     "firstName": "sample",
     "lastName": "sample",
-    "email": "sample",
+    "email": "sample_1@gmail.com",
     "password": "sample",
     "roleId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     "permissionId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"

@@ -9,8 +9,9 @@ internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> log
         Exception exception,
         CancellationToken cancellationToken)
     {
+        var traceId = httpContext.TraceIdentifier;
         logger.LogError(
-            exception, "Exception occurred: {Message}", exception.Message);
+            exception, $"Exception occurred: {exception.Message} | TraceId: {traceId}");
 
         var problemDetails = new ProblemDetails
         {

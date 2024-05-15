@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
+using nike_clone_backend.Shared.CustomResult;
 using nike_clone_backend.Shared.ErrorsExceptions;
 
 namespace nike_clone_backend.Middlewares
@@ -27,7 +28,7 @@ namespace nike_clone_backend.Middlewares
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled exception.");
+                _logger.LogError(ex.Message, "Unhandled exception.");
                 await HandleExceptionAsync(context, ex);
             }
         }
@@ -50,7 +51,7 @@ namespace nike_clone_backend.Middlewares
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = statusCode;
-            var result = JsonSerializer.Serialize(new { error = message });
+            var result = JsonSerializer.Serialize(new FailResult(message, statusCode));
             return context.Response.WriteAsync(result);
         }
 

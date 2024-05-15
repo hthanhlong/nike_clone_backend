@@ -22,14 +22,14 @@ public class AuthController : ControllerBase
     {
         _logger.LogDebug($"Signing up user {signUpDto}");
         await _authService.SignUp(signUpDto);
-        return new SuccessResponse(null, "User signed up successfully");
+        return new SuccessResponse("User signed up successfully", null);
     }
 
     [HttpPost("sign-in")]
     public async Task<ActionResult> SignIn([FromBody] SignInDto signInDto)
     {
         var tokens = await _authService.SignIn(signInDto);
-        return new SuccessResponse(new { tokens }, "User signed In successfully");
+        return new SuccessResponse("User signed In successfully", new { tokens });
     }
 
     [HttpPost("refresh-token")]
@@ -37,7 +37,7 @@ public class AuthController : ControllerBase
     {
         var tokens = await _authService.GetNewAccessToken(refreshTokenDto);
         Console.WriteLine(tokens);
-        return new SuccessResponse(new { AccessToken = tokens }, "New access token generated successfully");
+        return new SuccessResponse("New access token generated successfully", new { AccessToken = tokens });
     }
 }
 

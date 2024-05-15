@@ -23,16 +23,15 @@ using nike_clone_backend.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
-Log.Logger = new LoggerConfiguration()
-    .Enrich.FromLogContext()
-    .WriteTo.Console()   
-    .WriteTo.File("logs/Nike_clone_Backend.txt", rollingInterval: RollingInterval.Day)
-    .CreateLogger();
-
+// configure logging
+Log.Logger = (Serilog.ILogger)ConfigLogger.ConfigureLogger();
 builder.Host.UseSerilog();
+//end logging configuration
 
+// connect database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//end connect database
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
@@ -73,6 +72,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 var app = builder.Build();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -84,6 +84,7 @@ else
     app.UseHsts();
 }
 
+app.UseMiddleware<SerilogMiddleware>();
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseCors("AllowAllOrigins");
