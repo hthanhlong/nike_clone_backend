@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Nike_clone_Backend.Services;
 
 namespace Nike_clone_Backend.Controllers
 {
@@ -6,15 +7,22 @@ namespace Nike_clone_Backend.Controllers
     [Route("api/v1/[controller]")]
     public class ProductController : ControllerBase
     {
+        private readonly IProductService _productService;
+        private readonly ILogger<ProductController> _logger;
 
-        public ProductController()
+        public ProductController(
+            IProductService productService,
+            ILogger<ProductController> logger
+        )
         {
+            _productService = productService;
+            _logger = logger;
         }
 
         [HttpGet]
-        public IActionResult GetProducts()
+        public IActionResult GetProducts([FromQuery] string sort, [FromQuery] string search, [FromQuery] string page, [FromQuery] string limit)
         {
-            return Ok();
+            return Ok(_productService.GetProducts(sort, search, int.Parse(page), int.Parse(limit)));
         }
 
         [HttpGet("{id}")]

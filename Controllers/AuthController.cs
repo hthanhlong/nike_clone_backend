@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Nike_clone_Backend.Models.DTOs;
 using Nike_clone_Backend.Shared;
-using Nike_clone_Backend.Services.AuthService;
+using Nike_clone_Backend.Services;
 
 namespace Nike_clone_Backend.Controllers;
 
@@ -35,7 +35,7 @@ public class AuthController : ControllerBase
     [HttpPost("refresh-token")]
     public async Task<ActionResult> GetNewAccessToken([FromBody] RefreshTokenDto refreshTokenDto)
     {
-        var tokens = await _authService.GetNewAccessToken(refreshTokenDto);
+        string? tokens = await _authService.GetNewAccessToken(refreshTokenDto);
         Console.WriteLine(tokens);
         return new SuccessResponse("New access token generated successfully", new { AccessToken = tokens });
     }

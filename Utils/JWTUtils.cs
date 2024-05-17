@@ -1,12 +1,10 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.AccessControl;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using nike_clone_backend.Shared.ErrorsExceptions;
 using Nike_clone_Backend.Models;
 using Nike_clone_Backend.Models.DTOs;
-using Nike_clone_Backend.UnitOfWork;
 
 namespace Nike_clone_Backend.Utils
 {

@@ -3,9 +3,8 @@ using AutoMapper;
 using nike_clone_backend.Models.DTOs;
 using nike_clone_backend.Shared.ErrorsExceptions;
 using Nike_clone_Backend.Models;
-using Nike_clone_Backend.Models.DTOs;
-using Nike_clone_Backend.UnitOfWork;
-namespace Nike_clone_Backend.Services.UserService
+using Nike_clone_Backend.Repositories;
+namespace Nike_clone_Backend.Services
 {
     public class UserService : GenericService, IUserService
     {

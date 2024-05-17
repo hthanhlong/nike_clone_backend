@@ -2,7 +2,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nike_clone_Backend.Models;
-using Nike_clone_Backend.Services.RoleService;
+using Nike_clone_Backend.Services;
 
 namespace Nike_clone_Backend.Controllers
 {

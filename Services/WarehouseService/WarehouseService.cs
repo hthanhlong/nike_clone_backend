@@ -1,6 +1,6 @@
 using Nike_clone_Backend.Models;
 
-namespace Nike_clone_Backend.Services.WarehouseService
+namespace Nike_clone_Backend.Services
 {
     public class WarehouseService : IWarehouseService
     {

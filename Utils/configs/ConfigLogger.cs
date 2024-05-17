@@ -1,7 +1,7 @@
 ﻿using Serilog;
 using Serilog.Events;
 
-namespace Nike_clone_Backend;
+namespace Nike_clone_Backend.Utils.Configs;
 
 public class ConfigLogger
 {

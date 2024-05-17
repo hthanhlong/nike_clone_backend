@@ -1,15 +1,12 @@
-using AutoMapper;
-using Nike_clone_Backend.UnitOfWork;
+using Nike_clone_Backend.Repositories;
 
-namespace Nike_clone_Backend.Services
+namespace Nike_clone_Backend.Services;
+public class GenericService
 {
-    public class GenericService
+    protected readonly IUnitOfWork _unitOfWork;
+    public GenericService(IUnitOfWork unitOfWork)
     {
-        protected readonly IUnitOfWork _unitOfWork;
-        public GenericService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        _unitOfWork = unitOfWork;
     }
 }
 

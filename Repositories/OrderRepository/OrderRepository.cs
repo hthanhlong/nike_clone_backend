@@ -1,7 +1,6 @@
 using Nike_clone_Backend.Models;
 
-namespace Nike_clone_Backend.Repositories.OrderRepository;
-
+namespace Nike_clone_Backend.Repositories;
 public class OrderRepository
 {
     public Task<OrderModel> AddOrder(OrderModel order)

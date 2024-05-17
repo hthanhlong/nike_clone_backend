@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Cors.Infrastructure;
-namespace Nike_clone_Backend.Utils;
+namespace Nike_clone_Backend.Utils.Configs;
 public abstract class ConfigurationCors
 {
-    public static void CallBackMy(CorsOptions options)
+    public static void CallBack(CorsOptions options)
     {
         if (options == null)
         {

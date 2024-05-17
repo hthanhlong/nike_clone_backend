@@ -210,3 +210,5 @@ _pkginfo.txt
 *.[Cc]ache
 # but keep track of directories ending
 .fake
+
+.logs

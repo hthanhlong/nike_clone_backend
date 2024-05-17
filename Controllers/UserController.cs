@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using nike_clone_backend.Models.DTOs;
-using Nike_clone_Backend.Services.UserService;
+using Nike_clone_Backend.Services;
 
 namespace Nike_clone_Backend.Controllers
 {
