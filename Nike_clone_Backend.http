@@ -1,4 +1,5 @@
 @host = https://localhost:7182/api/v1
+#@host = https://localhost:5149/api/v1
 
 ### sign up fail
 POST {{host}}/Auth/sign-up HTTP/1.1
@@ -40,7 +41,6 @@ POST  {{host}}/Auth/sign-in HTTP/1.1
 content-type: application/json
 
 {
-    "email": "sample@gmail.com",
-    "password": "sample123"
+  "email": "sample@gmail.com",
+  "password": "sample"
 }
-

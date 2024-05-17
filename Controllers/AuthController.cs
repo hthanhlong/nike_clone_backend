@@ -29,7 +29,17 @@ public class AuthController : ControllerBase
     public async Task<ActionResult> SignIn([FromBody] SignInDto signInDto)
     {
         var tokens = await _authService.SignIn(signInDto);
-        return new SuccessResponse("User signed In successfully", new { tokens });
+        return new SuccessResponse("User signed In successfully", new
+        {
+            user = new
+            {
+                Email = signInDto.Email,
+                lastName = "Doe",
+                firstName = "hello"
+            },
+            AccessToken = tokens.AccessToken,
+            RefreshToken = tokens.RefreshToken
+        });
     }
 
     [HttpPost("refresh-token")]

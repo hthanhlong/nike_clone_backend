@@ -49,7 +49,7 @@ public class AuthService : GenericService, IAuthService
         await _unitOfWork.UserRepository.Insert(user);
         await _unitOfWork.SaveAsync();
     }
-    public async Task<object> SignIn(SignInDto signInDto)
+    public async Task<(string AccessToken, string RefreshToken)> SignIn(SignInDto signInDto)
     {
         var user = await _unitOfWork.UserRepository.GetUserByEmail(signInDto.Email) ?? throw new CustomException("User not found", 404);
         var hashedPassword = user.Password;
@@ -73,13 +73,7 @@ public class AuthService : GenericService, IAuthService
         await _unitOfWork.RefreshTokenRepository.Insert(refreshTokenModel);
         await _unitOfWork.SaveAsync();
 
-        return new
-        {
-            UserId = user.Id,
-            user.Email,
-            accessToken,
-            refreshToken
-        };
+        return (accessToken, refreshToken);
     }
 
     public async Task<string?> GetNewAccessToken(RefreshTokenDto refreshToken)
